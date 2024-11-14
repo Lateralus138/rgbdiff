@@ -15,10 +15,9 @@ std::regex VERBREGEX("^/([vV]|[vV][eE][rR][bB][oO][sS][eE])$");
 static bool VerbRegex(const std::string& str) { return std::regex_match(str, VERBREGEX); }
 std::regex MINIREGEX("^/([nN]|[mM][iI][nN][iI][mM][uU][mM])$");
 static bool MiniRegex(const std::string& str) { return std::regex_match(str, MINIREGEX); }
-std::regex MAXIREGEX("^/([xX]|[mM][iI][nN][uU][eE][nN][dD])$");
+std::regex MAXIREGEX("^/([xX]|[mM][aA][xX][iI][mM][uU][mM])$");
 static bool MaxiRegex(const std::string& str) { return std::regex_match(str, MAXIREGEX); }
 
-//static long long CheckIfStringIsHexAndConvertToLongThenCheckIfIs24BitValue(std::string& value)
 static long long CheckIfStringIsHexAndConvertToLongThenCheckIfIs24BitValue(std::string_view value)
 {
   if (!Globals::IsHexadecimalString(value)) return static_cast<long long>(-2);
@@ -27,7 +26,6 @@ static long long CheckIfStringIsHexAndConvertToLongThenCheckIfIs24BitValue(std::
   return iValue;
 }
 
-//static int minuendCheckAndAdd(std::string& value, Options& options)
 static int minuendCheckAndAdd(std::string_view value, Options& options)
 {
   long long check = CheckIfStringIsHexAndConvertToLongThenCheckIfIs24BitValue(value);
@@ -58,7 +56,7 @@ static int ParseArguments(ArgumentParser& args, Options& options)
       "\n                  this value is used, otherwise the first value passed"
       "\n                  to the program is used."
       "\n\n  @SWITCHES"
-      "\n    /h, /help     This help message."
+      "\n    /?, /h, /help This help message."
       "\n    /v, /verbose  Detailed output."
       "\n    /n, /minimum  Return the minimum value only if multiple subtrahends"
       "\n                  are passed."
