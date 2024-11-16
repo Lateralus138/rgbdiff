@@ -1,4 +1,4 @@
-<img src="./docs/media/logo/colordiff.png" alt="ICON" width="128" style="vertical-align: center;">![Readme Card](https://github-readme-stats.vercel.app/api/pin/?username=Lateralus138&repo=colordiff&theme=radical)
+<img src="./docs/media/logo/rgbdiff.png" alt="ICON" width="128" style="vertical-align: center;">![Readme Card](https://github-readme-stats.vercel.app/api/pin/?username=Lateralus138&repo=rgbdiff&theme=radical)
 
 ---
 

@@ -1,5 +1,5 @@
 ﻿// ╔═════════════════════════════════════════════════════════════════════════════╗
-// ║ Color Difference - Get the distance from one hexadecimal color to another.  ║
+// ║ RGB Difference - Get the distance from one hexadecimal color to another.    ║
 // ║ © 2024 Ian Pride - New Pride Software/Services                              ║
 // ╚═════════════════════════════════════════════════════════════════════════════╝
 
@@ -48,9 +48,9 @@ static int ParseArguments(ArgumentParser& args, Options& options)
   if (args.optionExistsByPredicate(HelpRegex, true))
   {
     std::string message =
-      "\n  Color Difference - Get the distance between two 24 bit colors from 0"
+      "\n  RGBDifference - Get the distance between two 24 bit colors from 0"
       "\n  to 441.672955930063722007616888732."
-      "\n\n  colordiff [SWITCHES] [PARAMETERS <VALUE>] <VALUES>"
+      "\n\n  rgbdiff [SWITCHES] [PARAMETERS <VALUE>] <VALUES>"
       "\n\n  @PARAMETERS"
       "\n    /m, /minuend  Initial hexadecimal color value to test. Ensures"
       "\n                  this value is used, otherwise the first value passed"
