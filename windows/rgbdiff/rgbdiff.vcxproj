@@ -136,6 +136,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ArgumentParser.cpp" />
+    <ClCompile Include="ciede_2000.cpp" />
     <ClCompile Include="Globals.cpp" />
     <ClCompile Include="rgbdiff.cpp" />
     <ClCompile Include="stdafx.cpp">
@@ -147,6 +148,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ArgumentParser.h" />
+    <ClInclude Include="ciede_2000.h" />
     <ClInclude Include="Globals.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="stdafx.h" />

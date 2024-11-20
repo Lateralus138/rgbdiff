@@ -3,21 +3,22 @@
 // ║ © 2024 Ian Pride - New Pride Software/Services                              ║
 // ╚═════════════════════════════════════════════════════════════════════════════╝
 
-#include "stdafx.h"
+#include "pch.h"
 
 // Regular expression switch/argument compilations and their unary predicate function
 // counterparts (std::find_if) for use in querying arguments in my argument parser class.
-std::regex HELPREGEX("^/([\\?]|[hH]|[hH][eE][lL][pP])$");
+std::regex HELPREGEX("^-([hH]|-[hH][eE][lL][pP])$");
 static bool HelpRegex(const std::string& str) { return std::regex_match(str, HELPREGEX); }
-std::regex MINUREGEX("^/([mM]|[mM][iI][nN][uU][eE][nN][dD])$");
+std::regex MINUREGEX("^-([mM]|-[mM][iI][nN][uU][eE][nN][dD])$");
 static bool MinuRegex(const std::string& str) { return std::regex_match(str, MINUREGEX); }
-std::regex VERBREGEX("^/([vV]|[vV][eE][rR][bB][oO][sS][eE])$");
+std::regex VERBREGEX("^-([vV]|-[vV][eE][rR][bB][oO][sS][eE])$");
 static bool VerbRegex(const std::string& str) { return std::regex_match(str, VERBREGEX); }
-std::regex MINIREGEX("^/([nN]|[mM][iI][nN][iI][mM][uU][mM])$");
+std::regex MINIREGEX("^-([nN]|-[mM][iI][nN][iI][mM][uU][mM])$");
 static bool MiniRegex(const std::string& str) { return std::regex_match(str, MINIREGEX); }
-std::regex MAXIREGEX("^/([xX]|[mM][aA][xX][iI][mM][uU][mM])$");
+std::regex MAXIREGEX("^-([xX]|-[mM][a][xX][iI][mM][uU][mM])$");
 static bool MaxiRegex(const std::string& str) { return std::regex_match(str, MAXIREGEX); }
 
+//static long long CheckIfStringIsHexAndConvertToLongThenCheckIfIs24BitValue(std::string& value)
 static long long CheckIfStringIsHexAndConvertToLongThenCheckIfIs24BitValue(std::string_view value)
 {
   if (!Globals::IsHexadecimalString(value)) return static_cast<long long>(-2);
@@ -52,15 +53,15 @@ static int ParseArguments(ArgumentParser& args, Options& options)
       "\n  CIE1976."
       "\n\n  rgbdiff [SWITCHES] [PARAMETERS <VALUE>] <VALUES>"
       "\n\n  @PARAMETERS"
-      "\n    /m, /minuend  Initial hexadecimal color value to test. Ensures"
+      "\n    -m, --minuend Initial hexadecimal color value to test. Ensures"
       "\n                  this value is used, otherwise the first value passed"
       "\n                  to the program is used."
       "\n\n  @SWITCHES"
-      "\n    /?, /h, /help This help message."
-      "\n    /v, /verbose  Detailed output."
-      "\n    /n, /minimum  Return the minimum value only if multiple subtrahends"
+      "\n    -h, --help    This help message."
+      "\n    -v, --verbose Detailed output."
+      "\n    -n, --minimum Return the minimum value only if multiple subtrahends"
       "\n                  are passed."
-      "\n    /x, /maximum  Return the maximum value only if multiple subtrahends"
+      "\n    -x, --maximum Return the maximum value only if multiple subtrahends"
       "\n                  are passed."
       "\n                  If both of the minimum and maximum switches are passed"
       "\n                  to the program then the minimum option is used."
@@ -145,7 +146,7 @@ int main(int argc, const char* argv[])
   double minOrMax = 0;
   if (options.minimum)
   {
-    class std::_Vector_iterator<class std::_Vector_val<struct std::_Simple_types<struct std::pair<class std::basic_string<char, struct std::char_traits<char>, class std::allocator<char> >, double> > > > min = std::min_element
+    auto min = std::min_element
     (
       std::begin(diffValues),
       std::end(diffValues),
@@ -155,7 +156,7 @@ int main(int argc, const char* argv[])
   }
   if (options.maximum)
   {
-    class std::_Vector_iterator<class std::_Vector_val<struct std::_Simple_types<struct std::pair<class std::basic_string<char, struct std::char_traits<char>, class std::allocator<char> >, double> > > > max = std::max_element
+    auto max = std::max_element
     (
       std::begin(diffValues),
       std::end(diffValues),

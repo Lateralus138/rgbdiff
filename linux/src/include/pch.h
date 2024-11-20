@@ -5,6 +5,7 @@
 #include <sstream>
 #include <iomanip>
 #include <regex>
+#include <cmath>
 #include "ciede_2000.h"
 #include "Globals.h"
 #include "ArgumentParser.h"

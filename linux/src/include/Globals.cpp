@@ -1,10 +1,11 @@
-#include "stdafx.h"
+#include "pch.h"
 #include "Globals.h"
 extern struct Options options;
 extern struct Errors errors;
 namespace Globals
 {
   unsigned int UINT_MAX_ENSURE = (unsigned int) - 1;
+  //bool IsHexadecimalString(const std::string& string)
   bool IsHexadecimalString(std::string_view string)
   {
     std::string string_ = std::string(string);
