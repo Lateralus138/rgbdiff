@@ -1,9 +1,0 @@
-rgbdiff_list=(
-  -h --help
-  -m --minuend
-  -v --verbose
-  -n --minimum
-  -x --maximum
-)
-complete -W "$(printf '%s\n' "${rgbdiff_list[@]}")" rgbdiff
-
