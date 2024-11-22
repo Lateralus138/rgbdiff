@@ -25,6 +25,6 @@ jobs:
         shell: pwsh
         if: steps.working_test_for_source_file_changes.outputs.source_files_changed == 'True'
         run: |
-          $files = "${{ steps.working_test_for_source_file_changes.outputs.source_files }}"
+          $files = "${{ steps.working_test_for_source_file_changes.outputs.source_files }}".Split(' ')
           $script = { $files | Where-Object { $_ -match '^.*buildwindows\.ps1$'} | Foreach-Object { $_ } }
           &$script
