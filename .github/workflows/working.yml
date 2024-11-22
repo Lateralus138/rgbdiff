@@ -21,6 +21,7 @@ jobs:
           $windows_files_regex = "^($windows_source_files)$"
           $windows_files = git diff --name-only HEAD^ HEAD | Where-Object { $_ -match $windows_files_regex }
           $windows_files_changed = $windows_files.Length -gt 0
+          $windows_files_changed
           Write-Output "windows_files_changed=$windows_files_changed" >> $Env:GITHUB_OUTPUT
       - name: MSBuild Setup
         uses: microsoft/setup-msbuild@v1.3.1
