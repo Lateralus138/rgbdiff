@@ -6,7 +6,7 @@ on:
       - 'working'
 
 jobs:
-  test:
+  working_build_test:
     runs-on: windows-latest
     steps:
       - name: Checkout
@@ -21,11 +21,13 @@ jobs:
           $source_files_changed = $files.Length -gt 0
           Write-Output "source_files_changed=$source_files_changed" >> $Env:GITHUB_OUTPUT
           Write-Output "source_files=$files" >> $Env:GITHUB_OUTPUT
-      - name: Source Files Changed
+      - name: Working Windows Build Test
         shell: pwsh
+        id: working_test_windows_build
         if: steps.working_test_for_source_file_changes.outputs.source_files_changed == 'True'
         run: |
           $files = "${{ steps.working_test_for_source_file_changes.outputs.source_files }}".Split(' ')
-          $script = $files | Where-Object { $_ -match '^.*buildwindows\.ps1$'} | Foreach-Object { (Resolve-Path $_).Path }
-          &$script
-          "Done."
+          $build_script = $files | Where-Object { $_ -match '^.*buildwindows\.ps1$'} | Foreach-Object { (Resolve-Path $_).Path }
+          &$build_script
+          $LASTEXITCODE
+          Get-ChildItem -Path .\build\windows\ -Recurse
