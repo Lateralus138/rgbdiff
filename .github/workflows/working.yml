@@ -18,7 +18,7 @@ jobs:
         id: working_test_for_source_file_changes
         run: |
           $source_files_changed = (git diff --name-only HEAD^ HEAD | Where-Object { $_ -match '^.*\.(cpp|h|yml)$' }).Length -gt 0
-          $readme_changed = (git diff --name-only HEAD^ HEAD | Where-Object { $_ -match '^.*\.(md)$' }).Length -gt 0
+          $readme_changed = (git diff --name-only HEAD^ HEAD | Where-Object { $_ -match 'README.md$' }).Length -gt 0
           Write-Output "source_files_changed=$source_files_changed" >> $Env:GITHUB_OUTPUT
           Write-Output "readme_changed=$readme_changed" >> $Env:GITHUB_OUTPUT
       - name: Source Files Changed
