@@ -6,7 +6,6 @@
 #include "stdafx.h"
 
 
-
 // Regular expression switch/argument compilations and their unary predicate function
 // counterparts (std::find_if) for use in querying arguments in my argument parser class.
 std::regex HELPREGEX("^/([\\?]|[hH]|[hH][eE][lL][pP])$");
