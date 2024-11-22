@@ -25,5 +25,5 @@ jobs:
         shell: pwsh
         if: steps.working_test_for_source_file_changes.outputs.source_files_changed == 'True'
         run: |
-          Write-Output "${{ steps.working_test_for_source_file_changes.outputs.source_files }}"
-          
+          $files = "${{ steps.working_test_for_source_file_changes.outputs.source_files }}"
+          $files
