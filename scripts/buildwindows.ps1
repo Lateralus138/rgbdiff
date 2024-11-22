@@ -30,6 +30,7 @@ if (-Not (Test-Path "$($BUILDDIR64)" -PathType Container))
   }
 }
 Set-Location "$($WINDOWSDIR)"
+
 # MSBuild /p:Configuration=Release /p:Platform=x86
 # if (-Not (Test-Path "$($WINDOWSDIR)\Release\rgbdiff.exe" -PathType Leaf))
 # {

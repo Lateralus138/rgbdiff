@@ -21,6 +21,8 @@ jobs:
           $source_files_changed = $files.Length -gt 0
           Write-Output "source_files_changed=$source_files_changed" >> $Env:GITHUB_OUTPUT
           Write-Output "source_files=$files" >> $Env:GITHUB_OUTPUT
+      - name: MSBuild Setup
+        uses: microsoft/setup-msbuild@v1.3.1
       - name: Working Windows Build Test
         shell: pwsh
         id: working_test_windows_build
