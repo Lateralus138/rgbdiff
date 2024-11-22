@@ -25,5 +25,5 @@ jobs:
         shell: pwsh
         if: steps.working_test_for_source_file_changes.outputs.source_files_changed == 'True'
         run: |
-          "$Env:GITHUB_OUPTUT.files"
+          "$Env:GITHUB_OUPTUT"
           
