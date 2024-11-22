@@ -27,5 +27,5 @@ jobs:
         run: |
           $files = "${{ steps.working_test_for_source_file_changes.outputs.source_files }}".Split(' ')
           $script = { "$($files | Where-Object { $_ -match '^.*buildwindows\.ps1$'} | Foreach-Object { (Resolve-Path $_).Path })" }
-          &$script
+          & ./$script
           "Done."
