@@ -44,4 +44,4 @@ if (-Not (Test-Path "$($WINDOWSDIR)\x64\Release\rgbdiff.exe" -PathType Leaf))
   # Exit 251
 }
 Move-Item -Path "$($WINDOWSDIR)\x64\Release\rgbdiff.exe" "$($BUILDDIR64)\rgbdiff-x64.exe"
-Set-Location "$(PARENTDIR)"
+Set-Location "$($PARENTDIR)"
