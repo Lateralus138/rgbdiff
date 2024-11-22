@@ -30,7 +30,6 @@ if (-Not (Test-Path "$($BUILDDIR64)" -PathType Container))
   }
 }
 Set-Location "$($WINDOWSDIR)"
-
 # MSBuild /p:Configuration=Release /p:Platform=x86
 # if (-Not (Test-Path "$($WINDOWSDIR)\Release\rgbdiff.exe" -PathType Leaf))
 # {
@@ -45,3 +44,4 @@ if (-Not (Test-Path "$($WINDOWSDIR)\x64\Release\rgbdiff.exe" -PathType Leaf))
   # Exit 251
 }
 Move-Item -Path "$($WINDOWSDIR)\x64\Release\rgbdiff.exe" "$($BUILDDIR64)\rgbdiff-x64.exe"
+Set-Location "$(PARENTDIR)"
