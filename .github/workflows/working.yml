@@ -14,6 +14,7 @@ jobs:
         with:
           fetch-depth: 2
       - name: Working Test For Source File Changes
+        shell: pwsh
         id: working_test_for_source_file_changes
         run: |
           $source_files_changed = (git diff --name-only HEAD^ HEAD | Where-Object { $_ -match '^.*\.(cpp|h|yml)$' }).Length -gt 0
@@ -23,10 +24,12 @@ jobs:
 #Write-Host "::set-output name=files_changed::$source_files_changed"
 #Write-Host "::set-output name=files_changed::$readme_changed"
       - name: Source Files Changed
+        shell: pwsh
         if: steps.working_test_for_source_file_changes.outputs.source_files_changed == 'True'
         run: |
           "Source files changed."
       - name: README changed
+        shell: pwsh
         if: steps.working_test_for_source_file_changes.outputs.readme_changed == 'True'
         run: |
           "README changed."
