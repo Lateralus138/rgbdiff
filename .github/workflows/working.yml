@@ -17,19 +17,18 @@ jobs:
         shell: pwsh
         id: working_test_for_source_file_changes
         run: |
-          $files = git diff --name-only HEAD^ HEAD | Where-Object { $_ -match '^.*\.(cpp|h|yml|ps1|sh)$' }
-          $source_files_changed = $files.Length -gt 0
-          Write-Output "source_files_changed=$source_files_changed" >> $Env:GITHUB_OUTPUT
-          Write-Output "source_files=$files" >> $Env:GITHUB_OUTPUT
+          $windows_source_files =  ((Get-ChildItem -Path .\windows\rgbdiff\ -File).FullName | Where-Object { $_ -match "^.*\.(cpp|h)$" }) -join '|'
+          $windows_files_regex = "^($windows_source_files)$"
+          $windows_files = git diff --name-only HEAD^ HEAD | Where-Object { $_ -match $windows_files_regex }
+          $windows_files_changed = $windows_files.Length -gt 0
+          Write-Output "windows_files_changed=$windows_files_changed" >> $Env:GITHUB_OUTPUT
       - name: MSBuild Setup
         uses: microsoft/setup-msbuild@v1.3.1
       - name: Working Windows Build Test
         shell: pwsh
         id: working_test_windows_build
-        if: steps.working_test_for_source_file_changes.outputs.source_files_changed == 'True'
+        if: steps.working_test_for_source_file_changes.outputs.windows_files_changed == 'True'
         run: |
-          $files = "${{ steps.working_test_for_source_file_changes.outputs.source_files }}".Split(' ')
-          $build_script = $files | Where-Object { $_ -match '^.*buildwindows\.ps1$'} | Foreach-Object { (Resolve-Path $_).Path }
-          &$build_script
+          .\scripts\buildwindows.ps1
           $LASTEXITCODE
           Get-ChildItem -Path .\build\windows\ -Recurse
