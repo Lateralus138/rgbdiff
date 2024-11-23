@@ -36,3 +36,4 @@ jobs:
         if: steps.working_test_windows_build.conclusion == 'Success'
         run: |
           Get-ChildItem -Path .\build\windows\x64
+          Exit 1
