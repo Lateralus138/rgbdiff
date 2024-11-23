@@ -2,9 +2,9 @@ name: test flow
 
 on:
   workflow_run:
-    workflows: ['Working Windows Workflow']
-    types: ['completed']
-    branches: ['working']
+    workflows: [Working Windows Workflow]
+    types: [completed]
+    branches: [working]
 
 jobs:
   test_w:
