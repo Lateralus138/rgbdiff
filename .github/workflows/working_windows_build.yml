@@ -36,4 +36,9 @@ jobs:
         if: steps.working_test_windows_build.conclusion == 'Success'
         run: |
           Get-ChildItem -Path .\build\windows\x64
+      - name: Working Windows Build Test Failure
+        shell: pwsh
+        id: working_windows_build_test_failure
+        if: steps.working_test_windows_build.conclusion == 'Failure'
+        run: |
           Exit 1
