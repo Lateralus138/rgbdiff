@@ -1,4 +1,4 @@
-name: Working Workflow
+name: Working Windows Workflow
 
 on:
   push:
