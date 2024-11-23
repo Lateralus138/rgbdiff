@@ -2,8 +2,7 @@ name: working windows
 
 on:
   push:
-    branches:
-      - 'working'
+    branches: [working]
 
 jobs:
   working_build_test:
