@@ -9,7 +9,7 @@ on:
 jobs:
   test:
     runs-on: windows-latest
-    if: github.event.workflow_run.conclusion == 'Success'
+    if: ${{ github.event.workflow_run.conclusion == 'Success' }}
     steps:
       - name: test_1
         shell: pwsh
