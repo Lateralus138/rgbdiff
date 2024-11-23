@@ -36,4 +36,4 @@ jobs:
         id: working_windows_build_test_success
         if: steps.working_test_windows_build.conclusion == 'Success'
         run: |
-          Get-ChildItem -Path .\build\windows
+          Get-ChildItem -Path .\build\windows\x64
