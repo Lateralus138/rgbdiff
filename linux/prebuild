@@ -1,10 +1,19 @@
 #!/usr/bin/env bash
 if [[ ! -e "src/include/pch.h.gch" ]]; then
   make pch
+  if [[ ! -e "src/include/pch.h.gch" ]]; then
+    exit 255
+  fi
 fi
 if ! ls src/lib/*.o 1> /dev/null 2>&1; then
   make buildlibslinux
+  if ! ls src/lib/*.o 1> /dev/null 2>&1; then
+    exit 254
+  fi
 fi
 if ! ls src/lib/*.a 1> /dev/null 2>&1; then
   make buildlibslinux
+  if ! ls src/lib/*.a 1> /dev/null 2>&1; then
+    exit 253
+  fi
 fi

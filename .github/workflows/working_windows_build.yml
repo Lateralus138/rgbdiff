@@ -1,11 +1,11 @@
-name: working windows
+name: working windows build
 
 on:
   push:
     branches: [working]
 
 jobs:
-  working_build_test:
+  working_windows_build_test:
     runs-on: windows-latest
     steps:
       - name: Checkout
@@ -25,20 +25,7 @@ jobs:
         uses: microsoft/setup-msbuild@v2
       - name: Working Windows Build Test
         shell: pwsh
-        id: working_test_windows_build
         if: steps.working_test_for_source_file_changes.outputs.windows_files_changed == 'True'
         run: |
           .\scripts\buildwindows.ps1
           if ($LASTEXITCODE -gt 0) { Exit $LASTEXITCODE }
-      - name: Working Windows Build Test Success
-        shell: pwsh
-        id: working_windows_build_test_success
-        if: steps.working_test_windows_build.conclusion == 'Success'
-        run: |
-          Get-ChildItem -Path .\build\windows\x64
-      - name: Working Windows Build Test Failure
-        shell: pwsh
-        id: working_windows_build_test_failure
-        if: steps.working_test_windows_build.conclusion == 'Failure'
-        run: |
-          Exit 1
