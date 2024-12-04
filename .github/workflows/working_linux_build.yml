@@ -8,7 +8,7 @@ on:
 
 jobs:
   working_linux_build_test:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -28,20 +28,21 @@ jobs:
           echo -e "Error:\t" $?
           linux_source_files=${linux_source_files::-1}
           echo -e "Error:\t" $?
-          linux_files=($(eval "git diff --name-only HEAD^ HEAD | grep -E '^.*($linux_source_files)$' --color=never"))
-          echo -e "Error:\t" $?
-          linux_files_changed=false
-          echo -e "Error:\t" $?
-          if [[ ${#linux_files[@]} -gt 0 ]]; then
-            echo -e "Error:\t" $?  
-            linux_files_changed='True'
-            echo -e "Error:\t" $?
-          fi
-          echo -e "Error:\t" $?
-          echo ${#linux_files[@]}
-          echo -e "Error:\t" $?
-          echo "linux_files_changed=$linux_files_changed" >> $GITHUB_OUTPUT
-          echo -e "Error:\t" $?
+          eval echo hey
+# linux_files=($(eval "git diff --name-only HEAD^ HEAD | grep -E '^.*($linux_source_files)$' --color=never"))
+# echo -e "Error:\t" $? 
+# linux_files_changed=false
+# echo -e "Error:\t" $?
+# if [[ ${#linux_files[@]} -gt 0 ]]; then
+#   echo -e "Error:\t" $?  
+#   linux_files_changed='True'
+#   echo -e "Error:\t" $?
+# fi
+# echo -e "Error:\t" $?
+# echo ${#linux_files[@]}
+# echo -e "Error:\t" $?
+# echo "linux_files_changed=$linux_files_changed" >> $GITHUB_OUTPUT
+# echo -e "Error:\t" $?
       - name: Working Linux Build Test
         shell: bash
         if: steps.working_test_for_source_file_changes.outputs.windows_files_changed == 'True'
