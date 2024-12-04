@@ -26,7 +26,7 @@ jobs:
           linux_files=($(eval "git diff --name-only HEAD^ HEAD | grep -E '^.*($linux_source_files)$' --color=never"))
           linux_files_changed=false
           if [[ ${#linux_files[@]} -gt 0 ]]; then
-            linux_files_changed='True' 
+            linux_files_changed='True'
           fi
           echo ${#linux_files[@]}
           echo "linux_files_changed=$linux_files_changed" >> $GITHUB_OUTPUT

@@ -27,5 +27,5 @@ jobs:
         shell: pwsh
         if: steps.working_test_for_source_file_changes.outputs.windows_files_changed == 'True'
         run: |
-          .\scripts\buildwindows.ps1 
+          .\scripts\buildwindows.ps1
           if ($LASTEXITCODE -gt 0) { Exit $LASTEXITCODE }
