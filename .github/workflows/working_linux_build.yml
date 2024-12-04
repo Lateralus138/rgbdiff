@@ -28,6 +28,7 @@ jobs:
           if [[ ${#linux_files[@]} -gt 0 ]]; then
             linux_files_changed='True' 
           fi
+          echo ${#linux_files[@]}
           echo "linux_files_changed=$linux_files_changed" >> $GITHUB_OUTPUT
       - name: Working Linux Build Test
         shell: bash
