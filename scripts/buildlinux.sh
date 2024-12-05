@@ -30,4 +30,3 @@ if [[ $? -gt 0 ]]; then
   echo -e "Could not move the program to the project build directory...\nExiting."
   exit 249
 fi
-echo test 1 
