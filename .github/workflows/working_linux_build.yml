@@ -24,9 +24,9 @@ jobs:
           echo -e "Error:\t" $?
           temp+=($(find ./scripts -maxdepth 1 -type f -iname "*linux*.sh" -exec basename {} \;))
           echo -e "Error:\t" $?
-          printf -v linux_source_files '%s\|' "${temp[*]}"
+          printf -v linux_source_files '%s\\|' "${temp[*]}"
           echo -e "Error:\t" $?
-          linux_source_files=${linux_source_files::-1}
+          linux_source_files="${linux_source_files::-1}"
           echo -e "Error:\t" $?
           GREP_COMMAND=(grep "$linux_source_files" '--color=never')
           linux_files=($(git diff --name-only HEAD^ HEAD | "${GREP_COMMAND[@]}"))
