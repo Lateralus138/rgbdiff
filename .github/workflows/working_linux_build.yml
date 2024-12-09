@@ -20,27 +20,26 @@ jobs:
         run: |
           GREP_COMMAND=('grep' '-E' '^.*(\.(yml|sh|cpp|h)|([mM][aA][kK][eE][fF][iI][lL][eE]|[pP][rR][eE][bB][uU][iI][lL][dD]))$' '--color=never')
           linux_files=($(git diff --name-only HEAD^ HEAD | "${GREP_COMMAND[@]}"))
-          echo -e "Error 1:\t" $?
           linux_files_changed=false
-          echo -e "Error:\t" $?
           if [[ ${#linux_files[@]} -gt 0 ]]; then
-            echo -e "Error 2:\t" $?  
             linux_files_changed=true
-            echo -e "Error 3:\t" $?
           fi
-          echo -e "Error 4:\t" $?
-          echo ${#linux_files[@]}
-          echo -e "Error 5:\t" $?
           echo "linux_files_changed=$linux_files_changed" >> $GITHUB_OUTPUT
-          echo -e "Error 6:\t" $?
       - name: Working Linux Build Test
         shell: bash
+        id: working_test_build
         if: steps.working_test_for_source_file_changes.outputs.linux_files_changed == 'True'
         run: |
           chmod +x ./scripts/buildlinux.sh
           chmod +x ./linux/prebuild
           ./scripts/buildlinux.sh
-          if [[ $? -gt 0 ]]; then
-            exit $?
+          linux_build_exists=false
+          if [[ ! -e "./build/linux/rgbdiff" ]]; then
+            linux_build_exists=true
           fi
-          ls build/linux
+          echo "linux_build_exists=$linux_build_exists" >> $GITHUB_OUTPUT
+      - name: Working Linux Test For Merge
+        shell: bash
+        if: steps.working_test_build.outputs.linux_build_exists == 'True'
+        run: |
+          echo "Ready for merge."
