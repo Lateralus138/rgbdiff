@@ -18,9 +18,13 @@ jobs:
         shell: bash
         id: working_test_for_source_file_changes
         run: |
-          GREP_COMMAND=('grep' '-E' '^.*(\.(yml|sh|cpp|h)|([mM][aA][kK][eE][fF][iI][lL][eE]|[pP][rR][eE][bB][uU][iI][lL][dD]))$' '--color=never')
-          linux_files=($(git diff --name-only HEAD^ HEAD | "${GREP_COMMAND[@]}"))
           linux_files_changed=false
+          {
+            GREP_COMMAND=('grep' '-E' '^.*(\.(yml|sh|cpp|h)|([mM][aA][kK][eE][fF][iI][lL][eE]|[pP][rR][eE][bB][uU][iI][lL][dD]))$' '--color=never')
+            linux_files=($(git diff --name-only HEAD^ HEAD | "${GREP_COMMAND[@]}"))
+          } || {
+            echo "No changes found."
+          }
           if [[ ${#linux_files[@]} -gt 0 ]]; then
             linux_files_changed=true
           fi
