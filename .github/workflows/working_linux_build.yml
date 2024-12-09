@@ -38,6 +38,7 @@ jobs:
         if: steps.working_test_for_source_file_changes.outputs.linux_files_changed == 'True'
         run: |
           chmod +x ./scripts/buildlinux.sh
+          chmod +x ./linux/prebuild
           ./scripts/buildlinux.sh
           if [[ $? -gt 0 ]]; then
             exit $?
