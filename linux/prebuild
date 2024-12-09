@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+ls src
 if [[ ! -e "src/include/pch.h.gch" ]]; then
   make pch
   if [[ ! -e "src/include/pch.h.gch" ]]; then
