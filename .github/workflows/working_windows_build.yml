@@ -25,7 +25,15 @@ jobs:
         uses: microsoft/setup-msbuild@v2
       - name: Working Windows Build Test
         shell: pwsh
+        id: working_windows_test_build
         if: steps.working_test_for_source_file_changes.outputs.windows_files_changed == 'True'
         run: |
           .\scripts\buildwindows.ps1
-          if ($LASTEXITCODE -gt 0) { Exit $LASTEXITCODE } 
+          $windows_build_exists = $false
+          if (Test-Path -Path .\build\windows\rgbdiff) { $windows_build_exists = $true }
+          Write-Output "windows_build_exists=$windows_build_exists" >> $Env:GITHUB_OUTPUT
+      - name: Working Windows Test For Merge
+        shell: pwsh
+        if: steps.working_windows_test_build.outputs.windows_build_exists == 'True'
+        run: |
+          "Ready for merge."

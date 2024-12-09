@@ -27,7 +27,7 @@ jobs:
           echo "linux_files_changed=$linux_files_changed" >> $GITHUB_OUTPUT
       - name: Working Linux Build Test
         shell: bash
-        id: working_test_build
+        id: working_linux_test_build
         if: steps.working_test_for_source_file_changes.outputs.linux_files_changed == 'True'
         run: |
           chmod +x ./scripts/buildlinux.sh
@@ -40,6 +40,6 @@ jobs:
           echo "linux_build_exists=$linux_build_exists" >> $GITHUB_OUTPUT
       - name: Working Linux Test For Merge
         shell: bash
-        if: steps.working_test_build.outputs.linux_build_exists == 'True'
+        if: steps.working_linux_test_build.outputs.linux_build_exists == 'True'
         run: |
           echo "Ready for merge."
