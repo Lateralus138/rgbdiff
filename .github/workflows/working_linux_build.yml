@@ -18,8 +18,7 @@ jobs:
         shell: bash
         id: working_test_for_source_file_changes
         run: |
-          GREP_COMMAND=('grep' '^.*(\.(yml|sh|cpp|h)|([mM][aA][kK][eE][fF][iI][lL][eE]|[pP][rR][eE][bB][uU][iI][lL][dD]))$' '--color=never')
-          linux_files=($(git diff --name-only HEAD^ HEAD | "${GREP_COMMAND[@]}"))
+          linux_files=($(git diff --name-only HEAD^ HEAD | grep '^.*(\.(yml|sh|cpp|h)|([mM][aA][kK][eE][fF][iI][lL][eE]|[pP][rR][eE][bB][uU][iI][lL][dD]))$' --color=never))
           echo -e "Error 1:\t" $?
           linux_files_changed=false
           echo -e "Error:\t" $?
