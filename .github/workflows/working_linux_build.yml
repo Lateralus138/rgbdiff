@@ -34,7 +34,7 @@ jobs:
           chmod +x ./linux/prebuild
           ./scripts/buildlinux.sh
           linux_build_exists=false
-          if [[ ! -e "./build/linux/rgbdiff" ]]; then
+          if [[ -e "./build/linux/rgbdiff" ]]; then
             linux_build_exists=true
           fi
           echo "linux_build_exists=$linux_build_exists" >> $GITHUB_OUTPUT
