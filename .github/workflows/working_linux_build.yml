@@ -8,7 +8,7 @@ on:
 
 jobs:
   working_linux_build_test:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -18,31 +18,21 @@ jobs:
         shell: bash
         id: working_test_for_source_file_changes
         run: |
-          temp=($(find ./linux/src -type f -iname "*.cpp" -exec basename {} \; -o -iname "*.h" -exec basename {} \;))
-          echo -e "Error:\t" $?
-          temp+=($(find ./linux -maxdepth 1 -type f -iname "makefile" -exec basename {} \; -o -iname "prebuild" -exec basename {} \;))
-          echo -e "Error:\t" $?
-          temp+=($(find ./scripts -maxdepth 1 -type f -iname "*linux*.sh" -exec basename {} \;))
-          echo -e "Error:\t" $?
-          printf -v linux_source_files '%s|' "${temp[*]}"
-          echo -e "Error:\t" $?
-          linux_source_files="${linux_source_files::-1}"
-          echo -e "Error:\t" $?
-          GREP_COMMAND=(grep "$linux_source_files" '--color=never')
+          GREP_COMMAND=('grep' '^.*(\.(yml|sh|cpp|h)|([mM][aA][kK][eE][fF][iI][lL][eE]|[pP][rR][eE][bB][uU][iI][lL][dD]))$' '--color=never')
           linux_files=($(git diff --name-only HEAD^ HEAD | "${GREP_COMMAND[@]}"))
-          echo -e "Error:\t" $?
+          echo -e "Error 1:\t" $?
           linux_files_changed=false
           echo -e "Error:\t" $?
           if [[ ${#linux_files[@]} -gt 0 ]]; then
-            echo -e "Error:\t" $?  
+            echo -e "Error 2:\t" $?  
             linux_files_changed='True'
-            echo -e "Error:\t" $?
+            echo -e "Error 3:\t" $?
           fi
-          echo -e "Error:\t" $?
+          echo -e "Error 4:\t" $?
           echo ${#linux_files[@]}
-          echo -e "Error:\t" $?
+          echo -e "Error 5:\t" $?
           echo "linux_files_changed=$linux_files_changed" >> $GITHUB_OUTPUT
-          echo -e "Error:\t" $? 
+          echo -e "Error 6:\t" $?
       - name: Working Linux Build Test
         shell: bash
         if: steps.working_test_for_source_file_changes.outputs.windows_files_changed == 'True'
