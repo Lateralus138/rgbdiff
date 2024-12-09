@@ -25,7 +25,7 @@ jobs:
           echo -e "Error:\t" $?
           if [[ ${#linux_files[@]} -gt 0 ]]; then
             echo -e "Error 2:\t" $?  
-            linux_files_changed='True'
+            linux_files_changed=true
             echo -e "Error 3:\t" $?
           fi
           echo -e "Error 4:\t" $?
@@ -35,7 +35,7 @@ jobs:
           echo -e "Error 6:\t" $?
       - name: Working Linux Build Test
         shell: bash
-        if: steps.working_test_for_source_file_changes.outputs.windows_files_changed == 'True'
+        if: steps.working_test_for_source_file_changes.outputs.linux_files_changed == 'True'
         run: |
           ./scripts/buildlinux.ps1
           if [[ $? -gt 0 ]]; then
