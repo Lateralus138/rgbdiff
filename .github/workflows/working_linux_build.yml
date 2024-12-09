@@ -37,6 +37,7 @@ jobs:
         shell: bash
         if: steps.working_test_for_source_file_changes.outputs.linux_files_changed == 'True'
         run: |
+          chmod +x ./scripts/buildlinux.sh
           ./scripts/buildlinux.sh
           if [[ $? -gt 0 ]]; then
             exit $?
