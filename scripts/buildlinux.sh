@@ -2,7 +2,7 @@
 SOURCEDIR=$PWD/linux
 PARENTDIR=$(dirname $SOURCEDIR)
 BUILDDIR=${PARENTDIR}/build/linux
-LIBDIR=${SOURCEDIR}/lib
+LIBDIR=${SOURCEDIR}/src/lib
 echo "Checking if the Linux build directory exists..."
 if [[ ! -d "${BUILDDIR}" ]]; then
   echo "Linux build directory does not exist, attempting to create..."
