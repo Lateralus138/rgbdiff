@@ -30,7 +30,7 @@ jobs:
         run: |
           .\scripts\buildwindows.ps1
           $windows_build_exists = $false
-          if (Test-Path -Path .\build\windows\rgbdiff) { $windows_build_exists = $true }
+          if (Test-Path -Path ".\build\windows\rgbdiff.exe") { $windows_build_exists = $true }
           Write-Output "windows_build_exists=$windows_build_exists" >> $Env:GITHUB_OUTPUT
       - name: Working Windows Test For Merge
         shell: pwsh
