@@ -46,4 +46,4 @@ jobs:
         shell: bash
         if: steps.working_linux_test_build.outputs.linux_build_exists == 'True'
         run: |
-          echo "Ready for merge."
+          git diff --name-only

@@ -36,4 +36,4 @@ jobs:
         shell: pwsh
         if: steps.working_windows_test_build.outputs.windows_build_exists == 'True'
         run: |
-          "Ready for merge."
+          git diff --name-only
