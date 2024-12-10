@@ -46,5 +46,10 @@ jobs:
         shell: bash
         if: steps.working_linux_test_build.outputs.linux_build_exists == 'True'
         run: |
-          git add .
-          git diff --name-only
+          line=$(printf '%0.s=' {1..50})
+          line="$line\n$line"
+          echo -e "$line"
+          tree ./build
+          echo -e "$line"
+          tree ./linux
+          echo -e "$line"
