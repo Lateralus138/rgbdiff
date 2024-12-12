@@ -53,3 +53,5 @@ jobs:
           echo -e "$line"
           tree ./linux
           echo -e "$line"
+          tree ./windows
+          echo -e "$line"
