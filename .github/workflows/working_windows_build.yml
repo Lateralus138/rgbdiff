@@ -17,7 +17,7 @@ jobs:
         id: working_test_for_source_file_changes
         run: |
           $windows_source_files =  ((Get-ChildItem -Path .\windows\rgbdiff\ -File -Name | Where-Object { $_ -match '^.*\.(cpp|h)$' }) -join '|').Replace('.', '\.')
-          $windows_source_files += '|\.ps1'
+          $windows_source_files += '|buildwindows.ps1|working_windows_build.yml'
           $windows_files = git diff --name-only HEAD^ HEAD | Where-Object { $_ -match "$('^.*(' + $windows_source_files + ')$')" }
           $windows_files_changed = $windows_files.Length -gt 0
           Write-Output "windows_files_changed=$windows_files_changed" >> $Env:GITHUB_OUTPUT
