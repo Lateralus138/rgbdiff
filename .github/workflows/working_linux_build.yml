@@ -53,15 +53,15 @@ jobs:
           line=$(printf '%0.s=' {1..50})
           line="$line\n$line"
           echo -e "$line"
-          for file in ${{ steps.working_test_for_source_file_changes.outputs.files_init }}; do
+          for file in ${{ steps.working_test_for_source_file_changes.outputs.files_init[@] }}; do
             echo "$file"
           done
           echo -e "$line"
-          for file in ${{ steps.working_test_for_source_file_changes.outputs.files_exit }}; do
+          for file in ${{ steps.working_test_for_source_file_changes.outputs.files_exit[@] }}; do
             echo "$file"
           done
           echo -e "$line"
-          echo ${{ steps.working_test_for_source_file_changes.outputs.files_init }} ${{ steps.working_test_for_source_file_changes.outputs.files_exit }} | tr ' ' '\n' | sort | uniq -u
+          echo ${{ steps.working_test_for_source_file_changes.outputs.files_init[@] }} ${{ steps.working_test_for_source_file_changes.outputs.files_exit[@] }} | tr ' ' '\n' | sort | uniq -u
           echo -e "$line"
 
 
