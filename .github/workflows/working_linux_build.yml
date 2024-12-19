@@ -18,8 +18,7 @@ jobs:
         shell: bash
         id: working_test_for_source_file_changes
         run: |
-          alias logfiles='find -not -path "./.git/*" -not -path "./.git"'
-          files_init=($(logfiles))
+          files_init=($(find -not -path "./.git/*" -not -path "./.git"))
           linux_files_changed=false
           {
             GREP_COMMAND=('grep' '-E' '^.*(\.(sh|cpp|h)|([mM][aA][kK][eE][fF][iI][lL][eE]|[pP][rR][eE][bB][uU][iI][lL][dD]|[wW][oO][rR][kK][iI][nN][gG]_[lL][iI][nN][uU][xX]_[bB][uU][iI][lL][dD]\.[yY][mM][lL]))$' '--color=never')
@@ -44,14 +43,13 @@ jobs:
           if [[ -e "./build/linux/rgbdiff" ]]; then
             linux_build_exists=true
           fi
-          files_exit=($(logfiles))
+          files_exit=($(find -not -path "./.git/*" -not -path "./.git"))
           echo "linux_build_exists=$linux_build_exists" >> $GITHUB_OUTPUT
           echo "files_exit=$files_exit" >> $GITHUB_OUTPUT
       - name: Working Linux Test For Merge
         shell: bash
         if: steps.working_linux_test_build.outputs.linux_build_exists == 'True'
         run: |
-          alias logfiles='find -not -path "./.git/*" -not -path "./.git"'
           line=$(printf '%0.s=' {1..50})
           line="$line\n$line"
           echo -e "$line"
