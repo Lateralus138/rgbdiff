@@ -63,7 +63,9 @@ jobs:
           IFS=',' read -a file_init_array <<< "${{ steps.working_test_for_source_file_changes.outputs.files_init }}"
           IFS=',' read -a file_exit_array <<< "${{ steps.working_test_for_source_file_changes.outputs.files_exit }}"
           echo -e "$line"
-          echo ${file_init_array[@]} ${file_exit_array[@]} | tr ' ' '\n' | sort | uniq -u
+          echo -e "\n${#file_init_array[@]}\n" ${file_init_array[@]}
+          echo -e "$line"
+          echo -e "\n${#file_exit_array[@]}\n" ${file_exit_array[@]}
           echo -e "$line"
 
 
