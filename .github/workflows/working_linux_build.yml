@@ -47,10 +47,10 @@ jobs:
           if [[ -e "./build/linux/rgbdiff" ]]; then
             linux_build_exists=true
           fi
-          files_i=($(find -not -path "./.git/*" -not -path "./.git"))
-          files_exit="${files_i[0]}"
-          for index in $(seq 2 ${#files_i[@]}); do
-            files_exit="${files_exit},${files_i[$(($index - 1))]}"
+          files_ii=($(find -not -path "./.git/*" -not -path "./.git"))
+          files_exit="${files_ii[0]}"
+          for index in $(seq 2 ${#files_ii[@]}); do
+            files_exit="${files_exit},${files_ii[$(($index - 1))]}"
           done
           echo "linux_build_exists=$linux_build_exists" >> $GITHUB_OUTPUT
           echo "files_exit=$files_exit" >> $GITHUB_OUTPUT
