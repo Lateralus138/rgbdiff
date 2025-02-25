@@ -61,10 +61,12 @@ jobs:
         run: |
           line=$(printf '%0.s=' {1..50})
           line="$line\n$line"
-          IFS=',' 
+          oIFS=$IFS
+          IFS=','
           read -a file_init_array <<< "${{ steps.working_test_for_source_file_changes.outputs.files_init }}"
           read -a file_exit_array <<< "${{ steps.working_linux_test_build.outputs.files_exit }}"
           echo -e "$line"
+          IFS=$oIFS
           paths=("$(echo ${file_init_array[@]} ${file_exit_array[@]} | tr ' ' '\n' | sort | uniq -u)")
           for item in "${paths[@]}"; do
             if [[ -d "$item" ]]; then
