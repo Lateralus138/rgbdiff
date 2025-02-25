@@ -18,7 +18,11 @@ jobs:
         shell: bash
         id: working_test_for_source_file_changes
         run: |
-          files_init=($(find -not -path "./.git/*" -not -path "./.git"))
+          files_i=($(find -not -path "./.git/*" -not -path "./.git"))
+          files_init="${files_i[0]}"
+          for index in $(seq 2 ${#files_i[@]}); do
+            files_init="${files_init},${files_i[$(($index - 1))]}"
+          done
           linux_files_changed=false
           {
             GREP_COMMAND=('grep' '-E' '^.*(\.(sh|cpp|h)|([mM][aA][kK][eE][fF][iI][lL][eE]|[pP][rR][eE][bB][uU][iI][lL][dD]|[wW][oO][rR][kK][iI][nN][gG]_[lL][iI][nN][uU][xX]_[bB][uU][iI][lL][dD]\.[yY][mM][lL]))$' '--color=never')
@@ -43,7 +47,11 @@ jobs:
           if [[ -e "./build/linux/rgbdiff" ]]; then
             linux_build_exists=true
           fi
-          files_exit=($(find -not -path "./.git/*" -not -path "./.git"))
+          files_i=($(find -not -path "./.git/*" -not -path "./.git"))
+          files_exit="${files_i[0]}"
+          for index in $(seq 2 ${#files_i[@]}); do
+            files_exit="${files_exit},${files_i[$(($index - 1))]}"
+          done
           echo "linux_build_exists=$linux_build_exists" >> $GITHUB_OUTPUT
           echo "files_exit=$files_exit" >> $GITHUB_OUTPUT
       - name: Working Linux Test For Merge
@@ -53,15 +61,15 @@ jobs:
           line=$(printf '%0.s=' {1..50})
           line="$line\n$line"
           echo -e "$line"
-          for file in ${{ steps.working_test_for_source_file_changes.outputs.files_init[@] }}; do
+          IFS=',' array -a file_init_array <<< ${{ steps.working_test_for_source_file_changes.outputs.files_init }}
+          IFS=',' array -a file_exit_array <<< ${{ steps.working_test_for_source_file_changes.outputs.files_init }}
+          for file in "${file_init_array[@]}"; do
             echo "$file"
           done
           echo -e "$line"
-          for file in ${{ steps.working_test_for_source_file_changes.outputs.files_exit[@] }}; do
+          for file in "${file_exit_array[@]}"; do
             echo "$file"
           done
-          echo -e "$line"
-          echo ${{ steps.working_test_for_source_file_changes.outputs.files_init[@] }} ${{ steps.working_test_for_source_file_changes.outputs.files_exit[@] }} | tr ' ' '\n' | sort | uniq -u
           echo -e "$line"
 
 
