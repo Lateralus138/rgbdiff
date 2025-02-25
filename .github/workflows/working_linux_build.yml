@@ -49,7 +49,7 @@ jobs:
           fi
           files_ii=($(find -not -path "./.git/*" -not -path "./.git"))
           files_exit="${files_ii[0]}"
-          echo "${files_exit} "
+          echo "${files_exit}_"
           for index2 in $(seq 2 ${#files_ii[@]}); do
             files_exit="${files_exit},${files_ii[$(($index2 - 1))]}"
             echo "${files_exit}"
