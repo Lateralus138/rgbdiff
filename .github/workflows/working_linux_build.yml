@@ -65,7 +65,7 @@ jobs:
           read -a file_init_array <<< "${{ steps.working_test_for_source_file_changes.outputs.files_init }}"
           read -a file_exit_array <<< "${{ steps.working_linux_test_build.outputs.files_exit }}"
           echo -e "$line"
-          paths=($(echo ${file_init_array[@]} ${file_exit_array[@]} | tr ' ' '\n' | sort | uniq -u))
+          paths=("$(echo ${file_init_array[@]} ${file_exit_array[@]} | tr ' ' '\n' | sort | uniq -u)")
           for item in ${paths[@]}; do
             if [[ -d "$item" ]]; then
               echo "$item is a directory."
