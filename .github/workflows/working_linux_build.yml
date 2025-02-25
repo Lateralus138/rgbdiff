@@ -43,7 +43,6 @@ jobs:
           chmod +x ./scripts/buildlinux.sh
           chmod +x ./linux/prebuild
           ./scripts/buildlinux.sh
-          echo "here 1"
           linux_build_exists=false
           if [[ -e "./build/linux/rgbdiff" ]]; then
             linux_build_exists=true
@@ -63,7 +62,7 @@ jobs:
           line="$line\n$line"
           IFS=',' 
           read -a file_init_array <<< "${{ steps.working_test_for_source_file_changes.outputs.files_init }}"
-          read -a file_exit_array <<< "${{ steps.working_test_for_source_file_changes.outputs.files_exit }}"
+          read -a file_exit_array <<< "${{ steps.working_linux_test_build.outputs.files_exit }}"
           echo -e "$line"
           echo -e "\n${#file_init_array[@]}\n" ${file_init_array[@]}
           echo -e "$line"
