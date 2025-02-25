@@ -48,6 +48,7 @@ jobs:
             linux_build_exists=true
           fi
           files_ii=($(find -not -path "./.git/*" -not -path "./.git"))
+          echo "${#files_ii[@]}"
           files_exit="${files_ii[0]}"
           for index in $(seq 2 ${#files_ii[@]}); do
             files_exit="${files_exit},${files_ii[$(($index - 1))]}"
