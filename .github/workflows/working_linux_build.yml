@@ -43,6 +43,7 @@ jobs:
           chmod +x ./scripts/buildlinux.sh
           chmod +x ./linux/prebuild
           ./scripts/buildlinux.sh
+          echo "here 1"
           linux_build_exists=false
           if [[ -e "./build/linux/rgbdiff" ]]; then
             linux_build_exists=true
@@ -51,7 +52,6 @@ jobs:
           files_exit="${files_ii[0]}"
           for index in $(seq 2 ${#files_ii[@]}); do
             files_exit="${files_exit},${files_ii[$(($index - 1))]}"
-            echo "${files_exit}"
           done
           echo "linux_build_exists=$linux_build_exists" >> $GITHUB_OUTPUT
           echo "files_exit=$files_exit" >> $GITHUB_OUTPUT
