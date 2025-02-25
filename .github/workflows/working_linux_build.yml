@@ -68,8 +68,10 @@ jobs:
           paths=("$(echo ${file_init_array[@]} ${file_exit_array[@]} | tr ' ' '\n' | sort | uniq -u)")
           for item in ${paths[@]}; do
             if [[ -d "$item" ]]; then
+              echo "+++"
               echo "$item is a directory."
             else
+              echo "+++"
               echo "$item is a file."
             fi
           done 
