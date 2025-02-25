@@ -52,12 +52,16 @@ jobs:
           files_exit="${files_ii[0]}"
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           for index in $(seq 2 ${#files_ii[@]}); do
             files_exit="${files_exit},${files_ii[$(($index - 1))]}"
 =======
           echo "${files_exit}"
 =======
           echo "${files_exit} "
+>>>>>>> working
+=======
+          echo "${files_exit}_"
 >>>>>>> working
           for index2 in $(seq 2 ${#files_ii[@]}); do
             files_exit="${files_exit},${files_ii[$(($index2 - 1))]}"
