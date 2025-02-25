@@ -61,8 +61,8 @@ jobs:
           line=$(printf '%0.s=' {1..50})
           line="$line\n$line"
           echo -e "$line"
-          IFS=',' array -a file_init_array <<< ${{ steps.working_test_for_source_file_changes.outputs.files_init }}
-          IFS=',' array -a file_exit_array <<< ${{ steps.working_test_for_source_file_changes.outputs.files_init }}
+          IFS=',' read -a file_init_array <<< ${{ steps.working_test_for_source_file_changes.outputs.files_init }}
+          IFS=',' read -a file_exit_array <<< ${{ steps.working_test_for_source_file_changes.outputs.files_init }}
           for file in "${file_init_array[@]}"; do
             echo "$file"
           done
