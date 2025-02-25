@@ -67,6 +67,7 @@ jobs:
           echo -e "$line"
           echo -e "\n${#file_exit_array[@]}\n" ${file_exit_array[@]}
           echo -e "$line"
+          echo "${{ steps.working_test_for_source_file_changes.outputs.files_exit }}"
 
 
           
