@@ -52,7 +52,6 @@ jobs:
           files_exit="${files_ii[0]}"
           for index2 in $(seq 2 ${#files_ii[@]}); do
             files_exit="${files_exit},${files_ii[$(($index2 - 1))]}"
-            echo "${files_exit}"
           done
           echo "linux_build_exists=$linux_build_exists" >> $GITHUB_OUTPUT
           echo "files_exit=$files_exit" >> $GITHUB_OUTPUT
@@ -62,8 +61,9 @@ jobs:
         run: |
           line=$(printf '%0.s=' {1..50})
           line="$line\n$line"
-          IFS=',' read -a file_init_array <<< "${{ steps.working_test_for_source_file_changes.outputs.files_init }}"
-          IFS=',' read -a file_exit_array <<< "${{ steps.working_test_for_source_file_changes.outputs.files_exit }}"
+          IFS=',' 
+          read -a file_init_array <<< "${{ steps.working_test_for_source_file_changes.outputs.files_init }}"
+          read -a file_exit_array <<< "${{ steps.working_test_for_source_file_changes.outputs.files_exit }}"
           echo -e "$line"
           echo -e "\n${#file_init_array[@]}\n" ${file_init_array[@]}
           echo -e "$line"
