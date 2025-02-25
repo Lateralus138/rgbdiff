@@ -22,7 +22,6 @@ jobs:
           $windows_files_changed = $windows_files.Length -gt 0
           Write-Output "windows_files_changed=$windows_files_changed" >> $Env:GITHUB_OUTPUT
           Write-Output "windows_files=$windows_files" >> $Env:GITHUB_OUTPUT
-          Exit 255
       - name: MSBuild Setup
         uses: microsoft/setup-msbuild@v2
       - name: Working Windows Build Test
@@ -36,6 +35,8 @@ jobs:
           Write-Output "windows_build_exists=$windows_build_exists" >> $Env:GITHUB_OUTPUT
       - name: Working Windows Test For Merge
         shell: pwsh
-        if: steps.working_windows_test_build.outcome == 'False'
+        if: steps.working_windows_test_build.outcome == 'True'
         run: |
-          Exit 1
+          if (${{ steps.working_windows_test_build.outputs.windows_build_exists }} -eq $false) {
+            Exit 1
+          }
