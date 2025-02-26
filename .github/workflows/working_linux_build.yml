@@ -86,9 +86,9 @@ jobs:
           IFS=','
           read -a file_init_array <<< "${{ steps.working_test_for_source_file_changes.outputs.files_init }}"
           for item in "${file_init_array[@]}"; do
-            if [[ "$item" =~ .*\.github/.* ]]; then
-              echo "$item is part of workflows."
-            else
-              echo "$item is not part of workflows."
+            if [[ ! -d "$item" ]]; then
+              if [[ ! "$item" =~ .*\.github/.* ]]; then
+                echo "$item is not part of workflows."
+              fi
             fi
           done
