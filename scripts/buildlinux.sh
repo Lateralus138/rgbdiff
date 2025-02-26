@@ -39,6 +39,6 @@ mv "./release/dynamic/rgbdiff" ${BUILDDIR}/
 if [[ $? -gt 0 ]]; then
   echo -e "Could not move the program to the project build directory...\nExiting."
   exit 248
-fi 
+fi
 make clean
 cd ${PARENTDIR}
