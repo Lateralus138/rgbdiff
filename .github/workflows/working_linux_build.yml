@@ -79,13 +79,11 @@ jobs:
             fi
           done 
           echo -e "$line"
-      - name: Merge to Master
-        uses: devmasx/merge-branch@1.4.0
+      - name: Push to Master
         if: steps.working_linux_build_cleanup.outcome == 'success'
-        with:
-          type: now
-          target_branch: master
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+        shell: bash
+        run: |
+          ls
         
         
           
