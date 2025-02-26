@@ -83,12 +83,8 @@ jobs:
         if: steps.working_linux_build_cleanup.outcome == 'success'
         shell: bash
         run: |
-          IFS=','
-          read -a file_init_array <<< "${{ steps.working_test_for_source_file_changes.outputs.files_init }}"
-          for item in "${file_init_array[@]}"; do
-            if [[ ! -d "$item" ]]; then
-              if [[ ! "$item" =~ .*\.github/.* ]]; then
-                echo "$item is not part of workflows."
-              fi
-            fi
-          done
+          git config --global user.name 'Lateralus138'
+          git config --global user.email 'Lateralus138@users.noreply.github.com'
+          git checkout master
+          git merge working -m "Merging working to master"
+          git push origin master
