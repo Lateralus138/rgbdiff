@@ -83,10 +83,12 @@ jobs:
         if: steps.working_linux_build_cleanup.outcome == 'success'
         shell: bash
         run: |
-          ls
-        
-        
-          
-
-
-          
+          IFS=','
+          read -a file_init_array <<< "${{ steps.working_test_for_source_file_changes.outputs.files_init }}"
+          for item in "${paths[@]}"; do
+            if [[ "$item" =~ .*\.github/workflows.* ]]; then
+              echo "$item is part of workflows."
+            else
+              echo "$item is not part of workflows."
+            fi
+          done
