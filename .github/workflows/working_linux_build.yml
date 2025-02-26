@@ -81,22 +81,10 @@ jobs:
             fi
           done 
           echo -e "$line"
-      - name: Push to Master
-        if: steps.working_linux_build_cleanup.outcome == 'success'
-        shell: bash
-        run: |
-          IFS=','
-          read -a file_init_array <<< "${{ steps.working_test_for_source_file_changes.outputs.files_init }}"
-          git config --global user.name 'Lateralus138'
-          git config --global user.email 'Lateralus138@users.noreply.github.com'
-          for item in "${file_init_array[@]}"; do
-            if [[ ! -d "$item" ]]; then
-              if [[ ! "$item" =~ .*\.github/.* ]]; then
-                git add "$item"
-              fi
-            fi
-          done
-          git checkout master
-          git pull
-          git merge working -m "Merging working to master - $(date -u)"
-          git push --force origin master
+      - uses: actions/checkout@master
+      - name: Merge working -> master
+        uses: devmasx/merge-branch@master
+        with:
+          type: now
+          target_branch: master
+          github_token: ${{ secrets.GITHUB_TOKEN }}
