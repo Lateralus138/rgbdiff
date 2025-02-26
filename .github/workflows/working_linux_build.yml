@@ -57,6 +57,7 @@ jobs:
           echo "files_exit=$files_exit" >> $GITHUB_OUTPUT
       - name: Working Linux Test For Merge
         shell: bash
+        id: working_linux_build_cleanup
         if: steps.working_linux_test_build.outputs.linux_build_exists == 'True'
         run: |
           line=$(printf '%0.s=' {1..50})
@@ -69,13 +70,25 @@ jobs:
           temp="$(echo ${file_init_array[@]} ${file_exit_array[@]} | tr ' ' '\n' | sort | uniq -u | tr '\n' ',')"
           read -a paths <<< ${temp::-1}
           for item in "${paths[@]}"; do
-            if [[ -d "$item" ]]; then
-              echo "$item is a directory."
-            else
-              echo "$item is a file."
+            if [[ -e "$item" ]]; then
+              if [[ -d "$item" ]]; then
+                rm -rf "$item" || exit 255
+              else
+                rm -f "$item" || exit 254
+              fi
             fi
           done 
           echo -e "$line"
+      - name: Merge to Master
+        uses: devmasx/merge-branch@1.4.0
+        if: steps.working_linux_build_cleanup.outcome == 'success'
+        with:
+          type: now
+          target_branch: master
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+        
+        
+          
 
 
           
