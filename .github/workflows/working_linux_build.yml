@@ -83,6 +83,7 @@ jobs:
           echo -e "$line"
       - uses: actions/checkout@master
       - name: Merge working -> master
+        if: steps.working_linux_build_cleanup.outcome == 'success'
         uses: devmasx/merge-branch@master
         with:
           type: now
