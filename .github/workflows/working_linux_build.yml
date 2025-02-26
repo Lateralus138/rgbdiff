@@ -83,9 +83,16 @@ jobs:
         if: steps.working_linux_build_cleanup.outcome == 'success'
         shell: bash
         run: |
+          IFS=','
+          read -a file_init_array <<< "${{ steps.working_test_for_source_file_changes.outputs.files_init }}"
           git config --global user.name 'Lateralus138'
           git config --global user.email 'Lateralus138@users.noreply.github.com'
-          git fetch origin master
-          git checkout master
-          git merge working -m "Merging working to master"
-          git push origin master
+          for item in "${file_init_array[@]}"; do
+            if [[ ! -d "$item" ]]; then
+              if [[ ! "$item" =~ .*\.github/.* ]]; then
+                git add "$item"
+              fi
+            fi
+          done
+          git commit --allow-empty -am "Pushed .\docs\json\* to master. - $(Get-Date ([datetime]::UtcNow)) UTC"
+          git push --force origin master
