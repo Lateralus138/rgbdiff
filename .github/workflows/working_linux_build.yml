@@ -44,6 +44,8 @@ jobs:
           chmod +x ./scripts/buildlinux.sh
           chmod +x ./linux/prebuild
           ./scripts/buildlinux.sh
+          chmod 0644 ./scripts/buildlinux.sh
+          chmod 0644 ./linux/prebuild
           linux_build_exists=false
           if [[ -e "./build/linux/rgbdiff" ]]; then
             linux_build_exists=true
