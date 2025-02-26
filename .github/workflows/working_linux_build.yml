@@ -96,5 +96,7 @@ jobs:
               fi
             fi
           done
-          git commit --allow-empty -am "Pushed to master. - $(date -u)"
+          git checkout master
+          git pull
+          git merge working -m "Merging working to master - $(date -u)"
           git push --force origin master
