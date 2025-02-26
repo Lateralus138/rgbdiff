@@ -94,5 +94,5 @@ jobs:
               fi
             fi
           done
-          git commit --allow-empty -am "Pushed .\docs\json\* to master. - $(date -u)"
+          git commit --allow-empty -am "Pushed to master. - $(date -u)"
           git push --force origin master
