@@ -66,14 +66,12 @@ jobs:
           read -a file_init_array <<< "${{ steps.working_test_for_source_file_changes.outputs.files_init }}"
           read -a file_exit_array <<< "${{ steps.working_linux_test_build.outputs.files_exit }}"
           echo -e "$line"
-          IFS=$oIFS
-          paths=($(echo ${file_init_array[@]} ${file_exit_array[@]} | tr ' ' '\n' | sort | uniq -u))
+          temp="$(echo ${file_init_array[@]} ${file_exit_array[@]} | tr ' ' '\n' | sort | uniq -u | tr '\n' ',')"
+          read -a paths <<< ${paths::-1}
           for item in "${paths[@]}"; do
             if [[ -d "$item" ]]; then
-              echo "+++"
               echo "$item is a directory."
             else
-              echo "+++"
               echo "$item is a file."
             fi
           done 
