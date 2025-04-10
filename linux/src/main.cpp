@@ -2,9 +2,7 @@
 // ║ RGB Difference - Get the distance from one hexadecimal color to another.    ║
 // ║ © 2024 Ian Pride - New Pride Software/Services                              ║
 // ╚═════════════════════════════════════════════════════════════════════════════╝
-//
 #include "pch.h"
-//
 // Regular expression switch/argument compilations and their unary predicate function
 // counterparts (std::find_if) for use in querying arguments in my argument parser class.
 std::regex HELPREGEX("^-([hH]|-[hH][eE][lL][pP])$");
@@ -17,7 +15,6 @@ std::regex MINIREGEX("^-([nN]|-[mM][iI][nN][iI][mM][uU][mM])$");
 static bool MiniRegex(const std::string& str) { return std::regex_match(str, MINIREGEX); }
 std::regex MAXIREGEX("^-([xX]|-[mM][a][xX][iI][mM][uU][mM])$");
 static bool MaxiRegex(const std::string& str) { return std::regex_match(str, MAXIREGEX); }
-//
 //static long long CheckIfStringIsHexAndConvertToLongThenCheckIfIs24BitValue(std::string& value)
 static long long CheckIfStringIsHexAndConvertToLongThenCheckIfIs24BitValue(std::string_view value)
 {
