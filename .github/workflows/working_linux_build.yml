@@ -14,7 +14,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          fetch-depth: 2
+          persist-credentials: false # otherwise, the token used is the GITHUB_TOKEN, instead of your personal access token.
+          fetch-depth: 0 # otherwise, there would be errors pushing refs to the destination repository.
       - name: Working Test For Source File Changes
         shell: bash
         id: working_test_for_source_file_changes
@@ -81,11 +82,22 @@ jobs:
             fi
           done 
           echo -e "$line"
-      - uses: actions/checkout@master
-      - name: Merge working -> master
+      - name: Commit files
         if: steps.working_linux_build_cleanup.outcome == 'success'
-        uses: devmasx/merge-branch@master
+        run: |
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git commit -a -m "Add changes"
+      - name: Push changes
+        uses: ad-m/github-push-action@master
         with:
-          type: now
-          target_branch: master
           github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.ref }}
+# - uses: actions/checkout@master
+# - name: Merge working -> master
+#   if: steps.working_linux_build_cleanup.outcome == 'success'
+#   uses: devmasx/merge-branch@master
+#   with:
+#     type: now
+#     target_branch: master
+#     github_token: ${{ secrets.GITHUB_TOKEN }}
