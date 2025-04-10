@@ -15,7 +15,6 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0 # otherwise, there would be errors pushing refs to the destination repository.
-          ref: working
       - name: Working Test For Source File Changes
         shell: bash
         id: working_test_for_source_file_changes
@@ -88,11 +87,10 @@ jobs:
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           git commit -a -m "Add changes"
-      - name: Push changes
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: ${{ github.ref }}
+          git checkout master
+          git merge working
+          git push
+          git checkout working
 # - uses: actions/checkout@master
 # - name: Merge working -> master
 #   if: steps.working_linux_build_cleanup.outcome == 'success'
