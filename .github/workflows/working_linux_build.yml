@@ -11,6 +11,24 @@ jobs:
     runs-on: ubuntu-24.04
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
+      - name: A
+        uses: actions/checkout@v4
+        with:
+          ref: working
+      - name: AA
+        shell: bash
+        run: |
+          echo "filea=$(cat ./linux/src/main.cpp)" >> $GITHUB_OUTPUT
+      - name: B
+        uses: actions/checkout@v4
+        with:
+          ref: master
+      - name: BB
+        shell: bash
+        run: |
+          echo "$steps.A.outputs.filea" > main.cpp
+          diff main.cpp ./linux/src/main.cpp
+          exit 1
       - name: Checkout
         uses: actions/checkout@v4
         with:
