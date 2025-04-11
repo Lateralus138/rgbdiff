@@ -2,7 +2,11 @@
 // ║ RGB Difference - Get the distance from one hexadecimal color to another.    ║
 // ║ © 2024 Ian Pride - New Pride Software/Services                              ║
 // ╚═════════════════════════════════════════════════════════════════════════════╝
+<<<<<<< HEAD
 // //
+=======
+//////
+>>>>>>> working
 #include "pch.h"
 // Regular expression switch/argument compilations and their unary predicate function
 // counterparts (std::find_if) for use in querying arguments in my argument parser class.
