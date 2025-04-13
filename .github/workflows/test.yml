@@ -22,7 +22,6 @@ jobs:
           ref: master
       - name: Get linux main.cpp hash master
         shell: bash
-        if: steps.testa.outcome == 'True'
         run: |
           line=$(printf '%0.s-' {1..50})
           hashb=$(sha256sum ./linux/src/main.cpp | awk '{print $1}')
