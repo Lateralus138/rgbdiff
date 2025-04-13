@@ -30,7 +30,7 @@ jobs:
           line=$(printf "%0.s-" {1..50})
           line="${line}\n${line}\n${line}"
           echo -e "$line"
-          "$(${{ steps.aaa.outputs.filea }} | base64 --decode)"
+          echo "${{ steps.aaa.outputs.filea }}" | base64 --decode
           echo -e "$line"
           echo "$(echo ${{ steps.aaa.outputs.filea }} | base64 --decode)" > main.cpp
           diff --side-by-side --suppress-common-lines main.cpp ./linux/src/main.cpp
