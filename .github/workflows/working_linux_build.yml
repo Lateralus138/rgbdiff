@@ -11,34 +11,6 @@ jobs:
     runs-on: ubuntu-24.04
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
-      - name: A
-        uses: actions/checkout@v4
-        with:
-          ref: working
-      - name: AA
-        shell: bash
-        id: aaa
-        run: |
-          filea=$(base64 --wrap=0 ./linux/src/main.cpp)
-          fhash=$(sha256sum ./linux/src/main.cpp -t | awk '{print $1}')
-          echo "filea=$filea" >> "$GITHUB_OUTPUT"
-          echo "fhash=$fhash" >> "$GITHUB_OUTPUT"
-      - name: B
-        uses: actions/checkout@v4
-        with:
-          ref: master
-      - name: BB
-        shell: bash
-        run: |
-          line=$(printf '%0.s-' {1..50})
-          line="${line}\n${line}"
-          echo "$(echo ${{ steps.aaa.outputs.filea }} | base64 --decode)" > main.cpp
-          fhashold=$(sha256sum main.cpp | awk '{print $1}')
-          fhashnew=$(sha256sum ./linux/src/main.cpp | awk '{print $1}')
-          echo -e "$line"
-          echo -e "Old:\t${fhashold}\nNew:\t${fhashnew}"
-          echo -e "$line"
-          exit 1
       - name: Checkout
         uses: actions/checkout@v4
         with:
@@ -109,15 +81,17 @@ jobs:
             fi
           done 
           echo -e "$line"
+          git commit -a -m "Add changes"
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: master
       - name: Commit files
         if: steps.working_linux_build_cleanup.outcome == 'success'
         run: |
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          git checkout master
-          git pull
           git merge working
-          git commit -a -m "Add changes"
           git push
 # - uses: actions/checkout@master
 # - name: Merge working -> master
