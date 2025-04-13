@@ -31,7 +31,7 @@ jobs:
         shell: bash
         run: |
           echo "${{ steps.aaa.outputs.filea }}" > main.cpp
-          diff main.cpp ./linux/src/main.cpp
+          diff --side-by-side --suppress-common-lines main.cpp ./linux/src/main.cpp
           exit 1
       - name: Checkout
         uses: actions/checkout@v4
