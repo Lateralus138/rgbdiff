@@ -19,9 +19,7 @@ jobs:
         shell: bash
         id: aaa
         run: |
-          echo "foobar<<EOF" >> "$GITHUB_OUTPUT"
-          echo "filea=$(cat ./linux/src/main.cpp)" >> "$GITHUB_OUTPUT"
-          echo "EOF" >> "$GITHUB_OUTPUT"
+          echo "filea=$(foobar<<EOF; cat ./linux/src/main.cpp; EOF)" >> "$GITHUB_OUTPUT"
       - name: B
         uses: actions/checkout@v4
         with:
