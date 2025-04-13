@@ -19,10 +19,10 @@ jobs:
         shell: bash
         id: aaa
         run: |
-          EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
-          o="$(cat ./linux/src/main.cpp)"
-          echo "filea=${o}" >> $GITHUB_OUTPUT
-          echo "$EOF" >> $GITHUB_OUTPUT
+          delimiter="$(openssl rand -hex 8)"
+          echo "output-name<<${delimiter}" >> "${GITHUB_OUTPUT}"
+          echo "filea=$(cat ./linux/src/main.cpp)" >> $GITHUB_OUTPUT
+          echo "${delimiter}" >> "${GITHUB_OUTPUT}"
       - name: B
         uses: actions/checkout@v4
         with:
