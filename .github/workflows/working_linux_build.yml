@@ -19,9 +19,7 @@ jobs:
         shell: bash
         id: aaa
         run: |
-          echo "foobar<<EOF" >> "$GITHUB_OUTPUT"
-          echo "$(cat ./linux/src/main.cpp)" >> "$GITHUB_OUTPUT"
-          echo "EOF" >> "$GITHUB_OUTPUT"
+          echo "filea=$(cat ./linux/src/main.cpp | base64)" >> "$GITHUB_OUTPUT"
       - name: B
         uses: actions/checkout@v4
         with:
@@ -32,9 +30,9 @@ jobs:
           line=$(printf "%0.s-" {1..50})
           line="${line}\n${line}\n${line}"
           echo -e "$line"
-          echo "$GITHUB_OUTPUT"
+          "$(${{ steps.aaa.outputs.filea }} | base64 --decode)"
           echo -e "$line"
-          echo "${{ steps.aaa.outputs.filea }}" > main.cpp
+          echo "$(${{ steps.aaa.outputs.filea }} | base64 --decode)" > main.cpp
           diff --side-by-side --suppress-common-lines main.cpp ./linux/src/main.cpp
           exit 1
       - name: Checkout
