@@ -19,15 +19,7 @@ jobs:
         shell: bash
         id: aaa
         run: |
-          line=$(printf "%0.s-" {1..50})
-          line="${line}\n${line}\n${line}"
-          echo -e "$line"
-          ls ./linux/src
-          echo -e "$line"
-          delimiter="$(openssl rand -hex 8)"
-          echo "output-name<<${delimiter}" >> $GITHUB_OUTPUT
-          echo "filea=$(cat ./linux/src/main.cpp)" >> $GITHUB_OUTPUT
-          echo "${delimiter}" >> $GITHUB_OUTPUT
+          printf "filea=<<EOF\n%s\nEOF\n" "$(cat ./linux/src/main.cpp)" << '$GITHUB_OUTPUT'
       - name: B
         uses: actions/checkout@v4
         with:
