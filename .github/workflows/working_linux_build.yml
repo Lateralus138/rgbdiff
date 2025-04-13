@@ -81,10 +81,10 @@ jobs:
             fi
           done 
           echo -e "$line"
-      - uses: actions/checkout@v2
-      - uses: emiliopedrollo/auto-merge@v1.2.0
-        name: merge-branch
-        with:
-          github_token: ${{ github.token }}
-          target_branch: 'master'
-          commit_message: 'Branch {target_branch} auto-merged {source_ref}'
+# - uses: actions/checkout@v2
+# - uses: emiliopedrollo/auto-merge@v1.2.0
+#   name: merge-branch
+#   with:
+#     github_token: ${{ github.token }}
+#     target_branch: 'master'
+#     commit_message: 'Branch {target_branch} auto-merged {source_ref}'

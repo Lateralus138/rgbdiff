@@ -1,0 +1,33 @@
+name: test
+
+on: [push]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Working
+        uses: actions/checkout@v4
+        with:
+          ref: working
+      - name: Get linux main.cpp hash working
+        shell: bash
+        id: testa
+        run: |
+          hasha=$(sha256sum ./linux/src/main.cpp | awk '{print $1}')
+          echo "hasha=$hasha" >> $GITHUB_OUTPUT
+      - name: Checkout Master
+        uses: actions/checkout@v4
+        with:
+          ref: master
+      - name: Get linux main.cpp hash master
+        shell: bash
+        if: steps.testa.outcome == 'True'
+        run: |
+          line=$(printf '%0.s-' {1..50})
+          hashb=$(sha256sum ./linux/src/main.cpp | awk '{print $1}')
+          echo -e "${line}\nhasha:\t${{ steps.testa.outputs.hasha }}\nhashb:\t$hashb"
+
+          
+
+
