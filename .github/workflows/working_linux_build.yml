@@ -25,9 +25,9 @@ jobs:
           ls ./linux/src
           echo -e "$line"
           delimiter="$(openssl rand -hex 8)"
-          echo "output-name<<${delimiter}" >> "$GITHUB_OUTPUT"
+          echo "output-name<<${delimiter}" >> $GITHUB_OUTPUT
           echo "filea=$(cat ./linux/src/main.cpp)" >> $GITHUB_OUTPUT
-          echo "${delimiter}" >> "$GITHUB_OUTPUT"
+          echo "${delimiter}" >> $GITHUB_OUTPUT
       - name: B
         uses: actions/checkout@v4
         with:
