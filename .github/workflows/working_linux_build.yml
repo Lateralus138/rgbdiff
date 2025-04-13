@@ -13,8 +13,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        with:
-          ref: working
       - name: Working Test For Source File Changes
         shell: bash
         id: working_test_for_source_file_changes
