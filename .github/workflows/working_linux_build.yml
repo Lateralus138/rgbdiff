@@ -19,8 +19,8 @@ jobs:
         shell: bash
         id: aaa
         run: |
-          o=$(cat ./linux/src/main.cpp)
-          echo "filea=$o" >> $GITHUB_OUTPUT
+          o="$(cat ./linux/src/main.cpp)"
+          echo "filea=${o}" >> $GITHUB_OUTPUT
       - name: B
         uses: actions/checkout@v4
         with:
@@ -28,7 +28,7 @@ jobs:
       - name: BB
         shell: bash
         run: |
-          echo ${{ steps.aaa.outputs.filea }} > main.cpp
+          echo "${{ steps.aaa.outputs.filea }}" > main.cpp
           diff main.cpp ./linux/src/main.cpp
           exit 1
       - name: Checkout
