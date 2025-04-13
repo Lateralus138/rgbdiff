@@ -19,12 +19,8 @@ jobs:
         shell: bash
         id: aaa
         run: |
-          line=$(printf "%0.s-" {1..50})
-          line="${line}\n${line}\n${line}"
-          echo -e "$line"
-          cat ./linux/src/main.cpp | base64
-          echo -e "$line"
-          echo "filea=$(cat ./linux/src/main.cpp | base64)" >> "$GITHUB_OUTPUT"
+          filea=$(cat ./linux/src/main.cpp | base64)
+          echo "filea=$filea" >> "$GITHUB_OUTPUT"
       - name: B
         uses: actions/checkout@v4
         with:
