@@ -19,7 +19,7 @@ jobs:
         shell: bash
         id: aaa
         run: |
-          filea=$(cat ./linux/src/main.cpp | base64)
+          filea=$(base64 ./linux/src/main.cpp)
           echo "filea=$filea" >> "$GITHUB_OUTPUT"
       - name: B
         uses: actions/checkout@v4
