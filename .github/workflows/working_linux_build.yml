@@ -32,7 +32,7 @@ jobs:
           echo -e "$line"
           "$(${{ steps.aaa.outputs.filea }} | base64 --decode)"
           echo -e "$line"
-          echo "$(${{ steps.aaa.outputs.filea }} | base64 --decode)" > main.cpp
+          echo "$(echo ${{ steps.aaa.outputs.filea }} | base64 --decode)" > main.cpp
           diff --side-by-side --suppress-common-lines main.cpp ./linux/src/main.cpp
           exit 1
       - name: Checkout
