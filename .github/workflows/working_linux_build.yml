@@ -19,8 +19,8 @@ jobs:
         shell: bash
         id: aaa
         run: |
-          filea=$(base64 --wrap=0 ./linux/src/main.cpp)
-          fhash=$(sha256sum linux/src/main.cpp -t | awk '{print $1}')
+          filea = $(base64 --wrap=0 ./linux/src/main.cpp)
+          fhash = $(sha256sum linux/src/main.cpp -t | awk '{print $1}')
           echo "filea=$filea" >> "$GITHUB_OUTPUT"
           echo "fhash=$fhash" >> "$GITHUB_OUTPUT"
       - name: B
