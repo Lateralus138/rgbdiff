@@ -33,7 +33,6 @@ jobs:
           line=$(printf '%0.s-' {1..50})
           line="${line}\n${line}"
           echo "$(echo ${{ steps.aaa.outputs.filea }} | base64 --decode)" > main.cpp
-          diff --side-by-side --suppress-common-lines main.cpp ./linux/src/main.cpp
           fhashold=$(sha256sum main.cpp | awk '{print $1}')
           fhashnew=$(sha256sum ./linux/src/main.cpp | awk '{print $1}')
           echo -e "$line"
