@@ -19,7 +19,9 @@ jobs:
         shell: bash
         id: aaa
         run: |
-          echo "filea=$(foobar<<EOF; cat ./linux/src/main.cpp; EOF)" >> "$GITHUB_OUTPUT"
+          echo "foobar<<EOF" >> "$GITHUB_OUTPUT"
+          echo "$(cat ./linux/src/main.cpp)" >> "$GITHUB_OUTPUT"
+          echo "EOF" >> "$GITHUB_OUTPUT"
       - name: B
         uses: actions/checkout@v4
         with:
@@ -30,7 +32,7 @@ jobs:
           line=$(printf "%0.s-" {1..50})
           line="${line}\n${line}\n${line}"
           echo -e "$line"
-          echo "${{ steps.aaa.outputs.filea }}"
+          echo "$GITHUB_OUTPUT"
           echo -e "$line"
           echo "${{ steps.aaa.outputs.filea }}" > main.cpp
           diff --side-by-side --suppress-common-lines main.cpp ./linux/src/main.cpp
