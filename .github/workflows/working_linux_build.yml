@@ -53,4 +53,4 @@ jobs:
             fi
           done
           echo -e "${line}\n${line}"
-          echo "${changed_files[@]}'"
+          echo "${#changed_files[@]}'"
