@@ -34,12 +34,18 @@ jobs:
         shell: bash
         id: working_test_for_master_source_file_changes
         run: |
+          function debug(){ echo "Here: $@"; }
+          debug 1
           line=$(printf '%0.s-' {1..50})
+          debug 2
           IFS=$'\n' read -rd '' -a linux_working_source_files <<<"$(echo "${{ steps.working_test_for_working_source_file_changes.outputs.linux_working_source_files_b64 }}" | base64 -d)"
+          debug 3
           declare -A linux_master_source_files
+          debug 4
           for file in $(find ./linux/src -type f); do
             linux_master_source_files["$file"]="$(sha256sum "$file" | awk '{print $1}')"
           done
+          debug 5
           for key in "${!linux_working_source_files[@]}"; do
             echo -e "${line}\nWorking\n${line}"
             echo "$key = ${linux_working_source_files[$key]}"
@@ -47,4 +53,6 @@ jobs:
             echo "$key = ${linux_master_source_files[$key]}"
             echo -e "${line}"
           done
+          debug 6
           echo -e "${line}\n${line}"
+          debug 7
