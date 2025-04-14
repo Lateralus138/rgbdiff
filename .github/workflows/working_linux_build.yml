@@ -11,80 +11,40 @@ jobs:
     runs-on: ubuntu-24.04
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
-      - name: Checkout
+      - name: Checkout Working
         uses: actions/checkout@v4
         with:
-          fetch-depth: 2
-      - name: Working Test For Source File Changes
+          ref: working
+      - name: Working Test For Working Source File Changes
         shell: bash
-        id: working_test_for_source_file_changes
+        id: working_test_for_working_source_file_changes
         run: |
-          files_i=($(find -not -path "./.git/*" -not -path "./.git"))
-          files_init="${files_i[0]}"
-          for index in $(seq 2 ${#files_i[@]}); do
-            files_init="${files_init},${files_i[$(($index - 1))]}"
+          declare -A linux_working_source_files
+          for file in $(find ./linux/src -type f); do
+            linux_working_source_files["$file"]="$(sha256sum "$file" | awk '{print $1}')"
           done
-          linux_files_changed=false
-          {
-            GREP_COMMAND=('grep' '-E' '^.*(\.(sh|cpp|h)|([mM][aA][kK][eE][fF][iI][lL][eE]|[pP][rR][eE][bB][uU][iI][lL][dD]|[wW][oO][rR][kK][iI][nN][gG]_[lL][iI][nN][uU][xX]_[bB][uU][iI][lL][dD]\.[yY][mM][lL]))$' '--color=never')
-            linux_files=($(git diff --name-only HEAD^ HEAD | "${GREP_COMMAND[@]}"))
-          } || {
-            echo "No changes found."
-          }
-          if [[ ${#linux_files[@]} -gt 0 ]]; then
-            linux_files_changed=true
-          fi
-          echo "linux_files_changed=$linux_files_changed" >> $GITHUB_OUTPUT
-          echo "files_init=$files_init" >> $GITHUB_OUTPUT
-      - name: Working Linux Build Test
+          linux_working_source_files_string="$(for key in "${!linux_working_source_files[@]}"; do echo "$key = ${linux_working_source_files[$key]}"; done)"
+          linux_working_source_files_b64="$(echo "$linux_working_source_files_string" | base64 -w 0)"
+          echo "linux_working_source_files_b64=$linux_working_source_files_b64" >> $GITHUB_OUTPUT
+      - name: Checkout Master
+        uses: actions/checkout@v4
+        with:
+          ref: master
+      - name: Working Test For Master Source File Changes
         shell: bash
-        id: working_linux_test_build
-        if: steps.working_test_for_source_file_changes.outputs.linux_files_changed == 'True'
+        id: working_test_for_master_source_file_changes
         run: |
-          chmod +x ./scripts/buildlinux.sh
-          chmod +x ./linux/prebuild
-          ./scripts/buildlinux.sh
-          chmod 0644 ./scripts/buildlinux.sh
-          chmod 0644 ./linux/prebuild
-          linux_build_exists=false
-          if [[ -e "./build/linux/rgbdiff" ]]; then
-            linux_build_exists=true
-          fi
-          files_ii=($(find -not -path "./.git/*" -not -path "./.git"))
-          files_exit="${files_ii[0]}"
-          for index2 in $(seq 2 ${#files_ii[@]}); do
-            files_exit="${files_exit},${files_ii[$(($index2 - 1))]}"
+          line=$(printf '%0.s-' {1..50})
+          IFS=$'\n' read -rd '' -a linux_working_source_files <<<"$(echo "${{ steps.working_test_for_working_source_file_changes.outputs.linux_working_source_files_b64 }}" | base64 -d)"
+          declare -A linux_master_source_files
+          for file in $(find ./linux/src -type f); do
+            linux_master_source_files["$file"]="$(sha256sum "$file" | awk '{print $1}')"
           done
-          echo "linux_build_exists=$linux_build_exists" >> $GITHUB_OUTPUT
-          echo "files_exit=$files_exit" >> $GITHUB_OUTPUT
-      - name: Working Linux Test For Merge
-        shell: bash
-        id: working_linux_build_cleanup
-        if: steps.working_linux_test_build.outputs.linux_build_exists == 'True'
-        run: |
-          line=$(printf '%0.s=' {1..50})
-          line="$line\n$line"
-          oIFS=$IFS
-          IFS=','
-          read -a file_init_array <<< "${{ steps.working_test_for_source_file_changes.outputs.files_init }}"
-          read -a file_exit_array <<< "${{ steps.working_linux_test_build.outputs.files_exit }}"
-          echo -e "$line"
-          temp="$(echo ${file_init_array[@]} ${file_exit_array[@]} | tr ' ' '\n' | sort | uniq -u | tr '\n' ',')"
-          read -a paths <<< ${temp::-1}
-          for item in "${paths[@]}"; do
-            if [[ -e "$item" ]]; then
-              if [[ -d "$item" ]]; then
-                rm -rf "$item" || exit 255
-              else
-                rm -f "$item" || exit 254
-              fi
-            fi
-          done 
-          echo -e "$line"
-# - uses: actions/checkout@v2
-# - uses: emiliopedrollo/auto-merge@v1.2.0
-#   name: merge-branch
-#   with:
-#     github_token: ${{ github.token }}
-#     target_branch: 'master'
-#     commit_message: 'Branch {target_branch} auto-merged {source_ref}'
+          for key in "${!linux_working_source_files[@]}"; do
+            echo -e "${line}\nWorking\n${line}"
+            echo "$key = ${linux_working_source_files[$key]}"
+            echo -e "${line}\nMaster\n${line}"
+            echo "$key = ${linux_master_source_files[$key]}"
+            echo -e "${line}"
+          done
+          echo -e "${line}\n${line}"
