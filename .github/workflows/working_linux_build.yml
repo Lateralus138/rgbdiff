@@ -69,11 +69,10 @@ jobs:
           chmod 0644 ./scripts/buildlinux.sh
           chmod 0644 ./linux/prebuild
           echo "successful_build=true" >> $GITHUB_OUTPUT
-      - name: Merge
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
       - uses: emiliopedrollo/auto-merge@v1.2.0
+        if: steps.working_build_test.outputs.successful_build == 'True'
         with:
           github_token: ${{ github.token }}
           target_branch: 'master'
           commit_message: 'Branch {target_branch} auto-merged {source_ref}'
-        if: steps.working_build_test.outputs.successful_build == 'True'
