@@ -35,31 +35,22 @@ jobs:
         id: master_test_for_source_file_changes
         run: |
           function debug(){ echo "Here: $@"; }
-          debug 1
           line=$(printf '%0.s-' {1..50})
-          debug 2
           decode="${{ steps.working_test_for_source_file_changes.outputs.linux_working_source_files_b64 }}"
-          debug 3
-          oIFS=$IFS
-          debug 4
-          debug 5
-          readarray -d $'\n' -t linux_working_source_files_ <<< "$(echo "$decode" | base64 -d)" 
-          debug 6
-          IFS=$oIFS
-          debug 7
+          readarray -d $'\n' -t linux_working_source_files_parse<<< "$(echo "$decode" | base64 -d)" 
           declare -A linux_master_source_files
-          debug 8
+          declare -A linux_working_source_files
+          for arg in "${linux_working_source_files_parse[@]}"; do
+            linux_working_source_files["$(echo "${arg}" | awk '{print $1}')"]="$(echo "${arg}" | awk '{print $3}')"
+          done
           for file in $(find ./linux/src -type f); do
             linux_master_source_files["$file"]="$(sha256sum "$file" | awk '{print $1}')"
           done
-          debug 9
-          for key in "${!linux_working_source_files_[@]}"; do
+          for key in "${!linux_working_source_files[@]}"; do
             echo -e "${line}\nWorking\n${line}"
-            echo "$key = ${linux_working_source_files_[$key]}"
+            echo "$key = ${linux_working_source_files[$key]}"
             echo -e "${line}\nMaster\n${line}"
             echo "$key = ${linux_master_source_files[$key]}"
             echo -e "${line}"
           done
-          debug 10
           echo -e "${line}\n${line}"
-          debug 11
