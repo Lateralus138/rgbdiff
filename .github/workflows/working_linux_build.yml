@@ -69,12 +69,16 @@ jobs:
           chmod 0644 ./scripts/buildlinux.sh
           chmod 0644 ./linux/prebuild
           echo "successful_build=true" >> $GITHUB_OUTPUT
+      - name: Checkout Master
+        uses: actions/checkout@v4
+        with:
+          ref: master
       - name: Merge To Master
         shell: bash
         id: merge_to_master
         if: steps.working_build_test.outputs.successful_build == 'True'
         run: |
-          git checkout master
+          git fetch origin working:working
           git merge working
           git commit -m "Merge working to master."
           git push origin master
