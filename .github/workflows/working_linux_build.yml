@@ -39,6 +39,8 @@ jobs:
           line=$(printf '%0.s-' {1..50})
           debug 2
           decode="${{ steps.working_test_for_source_file_changes.outputs.linux_working_source_files_b64 }}"
+          echo "$decode"
+          echo "$decode" | base64 -d
           debug 3
           oIFS=$IFS
           debug 4
