@@ -42,9 +42,8 @@ jobs:
           debug 3
           oIFS=$IFS
           debug 4
-          IFS=$'\n'
           debug 5
-          read -r -d '' -a linux_working_source_files_ <<< "$(echo "$decode" | base64 -d)"
+          readarray -d $'\n' -t linux_working_source_files_ <<< "$(echo "$decode" | base64 -d)" 
           debug 6
           IFS=$oIFS
           debug 7
