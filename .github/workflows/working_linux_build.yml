@@ -44,7 +44,7 @@ jobs:
           debug 4
           IFS=$'\n'
           debug 5
-          read --help
+          bash --version
           read -r -d '' -a linux_working_source_files <<<"$(echo "$decode" | base64 -d)"
           debug 6
           IFS=$oIFS
