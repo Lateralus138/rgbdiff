@@ -40,6 +40,7 @@ jobs:
           readarray -d $'\n' -t linux_working_source_files_parse<<< "$(echo "$decode" | base64 -d)" 
           declare -A linux_master_source_files
           declare -A linux_working_source_files
+          declare -a changed_files
           for arg in "${linux_working_source_files_parse[@]}"; do
             linux_working_source_files["$(echo "${arg}" | awk '{print $1}')"]="$(echo "${arg}" | awk '{print $3}')"
           done
@@ -47,10 +48,9 @@ jobs:
             linux_master_source_files["$file"]="$(sha256sum "$file" | awk '{print $1}')"
           done
           for key in "${!linux_working_source_files[@]}"; do
-            echo -e "${line}\nWorking\n${line}"
-            echo "$key = ${linux_working_source_files[$key]}"
-            echo -e "${line}\nMaster\n${line}"
-            echo "$key = ${linux_master_source_files[$key]}"
-            echo -e "${line}"
+            if [[ "${linux_working_source_files[$key]}" != "${linux_master_source_files[$key]}" ]]; then
+              changed_files+=("$key")
+            fi
           done
           echo -e "${line}\n${line}"
+          echo "${changed_files[@]}'"
