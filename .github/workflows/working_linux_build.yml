@@ -40,14 +40,20 @@ jobs:
           debug 2
           decode="${{ steps.working_test_for_source_file_changes.outputs.linux_working_source_files_b64 }}"
           debug 3
-          IFS=$'\n' read -rd '' -a linux_working_source_files <<<"$(echo "$decode" | base64 -d)"
+          oIFS=$IFS
           debug 4
-          declare -A linux_master_source_files
+          IFS=$'\n'
           debug 5
+          read -rd '' -a linux_working_source_files <<<"$(echo "$decode" | base64 -d)"
+          debug 6
+          IFS=$oIFS
+          debug 7
+          declare -A linux_master_source_files
+          debug 8
           for file in $(find ./linux/src -type f); do
             linux_master_source_files["$file"]="$(sha256sum "$file" | awk '{print $1}')"
           done
-          debug 6
+          debug 9
           for key in "${!linux_working_source_files[@]}"; do
             echo -e "${line}\nWorking\n${line}"
             echo "$key = ${linux_working_source_files[$key]}"
@@ -55,6 +61,6 @@ jobs:
             echo "$key = ${linux_master_source_files[$key]}"
             echo -e "${line}"
           done
-          debug 7
+          debug 10
           echo -e "${line}\n${line}"
-          debug 8
+          debug 11
