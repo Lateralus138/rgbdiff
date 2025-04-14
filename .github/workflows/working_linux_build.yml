@@ -53,8 +53,7 @@ jobs:
             fi
           done
           echo -e "${line}\n${line}"
-          echo "${#changed_files[@]}'"
-          echo "changed_files=$changed_files" >> $GITHUB_OUTPUT
+          echo "changed_files=${#changed_files[@]}" >> $GITHUB_OUTPUT
       - name: Checkout Working
         uses: actions/checkout@v4
         with:
