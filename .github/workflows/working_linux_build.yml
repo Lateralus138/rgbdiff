@@ -44,7 +44,7 @@ jobs:
           debug 4
           IFS=$'\n'
           debug 5
-          readarray -t linux_working_source_files <<<"$(echo "$decode" | base64 -d)"
+          read -r -d '' -a linux_working_source_files_ <<< "$(echo "$decode" | base64 -d)"
           debug 6
           IFS=$oIFS
           debug 7
@@ -54,9 +54,9 @@ jobs:
             linux_master_source_files["$file"]="$(sha256sum "$file" | awk '{print $1}')"
           done
           debug 9
-          for key in "${!linux_working_source_files[@]}"; do
+          for key in "${!linux_working_source_files_[@]}"; do
             echo -e "${line}\nWorking\n${line}"
-            echo "$key = ${linux_working_source_files[$key]}"
+            echo "$key = ${linux_working_source_files_[$key]}"
             echo -e "${line}\nMaster\n${line}"
             echo "$key = ${linux_master_source_files[$key]}"
             echo -e "${line}"
