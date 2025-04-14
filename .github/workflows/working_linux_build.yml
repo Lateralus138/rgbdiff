@@ -74,4 +74,7 @@ jobs:
         id: merge_to_master
         if: steps.working_build_test.outputs.successful_build == 'True'
         run: |
-          ls ./linux/build
+          git checkout master
+          git merge working
+          git commit -m "Merge working to master."
+          git push origin master
