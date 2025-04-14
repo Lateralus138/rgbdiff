@@ -54,3 +54,27 @@ jobs:
           done
           echo -e "${line}\n${line}"
           echo "${#changed_files[@]}'"
+          - name: Checkout Working
+          uses: actions/checkout@v4
+          with:
+            ref: working
+      - name: Working Build Test
+        shell: bash
+        id: working_build_test
+        if: steps.master_test_for_source_file_changes.outputs.changed_files > 0
+        run: |
+          chmod +x ./scripts/buildlinux.sh
+          chmod +x ./linux/prebuild
+          ./scripts/buildlinux.sh
+          chmod 0644 ./scripts/buildlinux.sh
+          chmod 0644 ./linux/prebuild
+          echo "successful_build=true" >> $GITHUB_OUTPUT
+      - name: Merge To Master
+        shell: bash
+        id: merge_to_master
+        if: steps.working_build_test.outputs.successful_build == 'True'
+        run: |
+          git checkout master
+          git merge working
+          git commit -m "Merge working to master."
+          git push origin master
