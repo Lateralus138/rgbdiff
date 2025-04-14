@@ -53,11 +53,19 @@ jobs:
             fi
           done
           echo -e "${line}\n${line}"
+<<<<<<< HEAD
           echo "changed_files=${#changed_files[@]}" >> $GITHUB_OUTPUT
       - name: Checkout Working
         uses: actions/checkout@v4
         with:
           ref: working
+=======
+          echo "${#changed_files[@]}'"
+          - name: Checkout Working
+          uses: actions/checkout@v4
+          with:
+            ref: working
+>>>>>>> working
       - name: Working Build Test
         shell: bash
         id: working_build_test
