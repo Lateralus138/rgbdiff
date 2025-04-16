@@ -68,7 +68,7 @@ jobs:
           ./scripts/buildlinux.sh
           chmod 0644 ./scripts/buildlinux.sh
           chmod 0644 ./linux/prebuild
-          echo "successful_build=true" >> $GITHUB_OUTPUT
+          echo "successful_build=True" >> $GITHUB_OUTPUT
       - name: Commit files
         if: steps.working_build_test.outputs.successful_build == 'True'
         run: |
