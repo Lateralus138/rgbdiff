@@ -74,9 +74,13 @@ jobs:
         run: |
           git config --global user.name 'Lateralus138'
           git config --global user.email 'Lateralus138@users.noreply.github.com'
-          git pull origin working --allow-unrelated-histories
+          # Ensure the working branch is up-to-date
+          git checkout working
+          git pull origin working
+          # Ensure the master branch is up-to-date
           git checkout master
-          git pull origin master --allow-unrelated-histories
-          git merge working --no-ff
-          git commit -a -m "Merged working to master."
+          git pull origin master
+          # Merge the working branch into master
+          git merge working --no-ff || echo "Merge conflict detected. Resolve manually."
+          # Push changes back to the master branch
           git push origin master
