@@ -74,8 +74,9 @@ jobs:
         run: |
           git config --global user.name 'Lateralus138'
           git config --global user.email 'Lateralus138@users.noreply.github.com'
-          git pull origin master --allow-unrelated-histories
+          git pull origin working --allow-unrelated-histories
           git checkout master
+          git pull origin master --allow-unrelated-histories
           git merge working --no-ff
           git commit -a -m "Merged working to master."
           git push origin master
