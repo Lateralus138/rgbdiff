@@ -74,5 +74,8 @@ jobs:
         run: |
           git config --global user.name 'Lateralus138'
           git config --global user.email 'Lateralus138@users.noreply.github.com'
-          git commit --allow-empty -am "Pushed working to master."
-          git push --force origin master
+          git clone https://github.com/Lateralus138/rgbdiff.git
+          git checkout master
+          git merge working
+          git commit -a -m "Merged working to master."
+          git push origin master
