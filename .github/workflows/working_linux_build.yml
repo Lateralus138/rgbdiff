@@ -72,15 +72,21 @@ jobs:
       - name: Commit files
         if: steps.working_build_test.outputs.successful_build == 'True'
         run: |
+          [DateTime]::UtcNow.ToString('u').Replace('Z', ' UTC') >> ".merge_history"
           git config --global user.name 'Lateralus138'
           git config --global user.email 'Lateralus138@users.noreply.github.com'
           # Ensure the working branch is up-to-date
           git checkout working
           git pull origin working
+          git add .
+          git commit -m "Merging with master. - $([DateTime]::UtcNow.ToString('u').Replace('Z', ' UTC'))"
+          git push origin working
           # Ensure the master branch is up-to-date
           git checkout master
           git pull origin master
           # Merge the working branch into master
           git merge working --no-ff || echo "Merge conflict detected. Resolve manually."
+          git add .
+          git commit -amend -m "Merged with working."
           # Push changes back to the master branch
           git push origin master
