@@ -83,7 +83,7 @@ jobs:
           git push origin working
           # Ensure the master branch is up-to-date
           git checkout master
-          git pull origin master
+          git pull origin master --allow-unrelated-histories
           # Merge the working branch into master
           git merge working --no-ff || echo "Merge conflict detected. Resolve manually."
           git add .
