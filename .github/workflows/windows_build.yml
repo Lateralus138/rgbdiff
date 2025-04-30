@@ -1,0 +1,10 @@
+name: Windows Build
+on:
+  push:
+    paths:
+      - 'windows/am_closest/**.cpp'
+      - 'windows/am_closest/**.h'
+      - '**.sln'
+      - '.github/workflows/**.yml'
+      - 'scripts/**.ps1'
+
