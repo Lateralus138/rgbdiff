@@ -2,9 +2,20 @@ name: Windows Build
 on:
   push:
     paths:
-      - 'windows/am_closest/**.cpp'
-      - 'windows/am_closest/**.h'
+      - 'windows/**.cpp'
+      - 'windows/**.h'
       - '**.sln'
-      - '.github/workflows/**.yml'
+      - '.github/**.yml'
       - 'scripts/**.ps1'
 
+jobs:
+  windows_build:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout Master
+        uses: actions/checkout@v4
+      - name: Windows Build
+        shell: pwsh
+        id: windows_build_id
+        run: |
+          Get-ChildItem
