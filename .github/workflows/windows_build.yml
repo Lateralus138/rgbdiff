@@ -24,7 +24,7 @@ jobs:
           $br = $break_line + "`n" + $break_line
           $br
           try {
-            .\scripts\buildwindow.ps1
+            .\scripts\buildwindows.ps1
           } catch {
             $_.Exception.Message
             $br
