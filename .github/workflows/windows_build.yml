@@ -25,6 +25,8 @@ jobs:
             .\scripts\buildwindow.ps1
           } catch {
             $_.Exception.Message
+            $LASTEXITCODE
+            $br
             Exit 69
           }
           $LASTEXITCODE
