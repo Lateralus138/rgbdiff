@@ -14,6 +14,8 @@ jobs:
     steps:
       - name: Checkout Master
         uses: actions/checkout@v4
+      - name: MSBuild Setup
+        uses: microsoft/setup-msbuild@v2
       - name: Windows Build
         shell: pwsh
         id: windows_build_id
@@ -22,11 +24,10 @@ jobs:
           $br = $break_line + "`n" + $break_line
           $br
           try {
-            .\scripts\buildwindows.ps1
+            .\scripts\buildwindow.ps1
           } catch {
             $_.Exception.Message
-            $LASTEXITCODE
             $br
             Exit 69
           }
-          $LASTEXITCODE
+          $br
