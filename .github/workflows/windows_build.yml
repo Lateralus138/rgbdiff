@@ -18,4 +18,13 @@ jobs:
         shell: pwsh
         id: windows_build_id
         run: |
-          Get-ChildItem
+          $break_line = '-' * 80
+          $br = $break_line + "`n" + $break_line
+          $br
+          try {
+            .\scripts\buildwindow.ps1
+          } catch {
+            $_.Exception.Message
+            Exit 69
+          }
+          $LASTEXITCODE
