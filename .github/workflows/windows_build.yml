@@ -32,3 +32,4 @@ jobs:
             $br
           }
           $br
+          Get-ChildItem -Path .\build\windows
