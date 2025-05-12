@@ -94,7 +94,7 @@ jobs:
         echo "VS_FULL=$(cat docs/latest_tag_name.txt)" >> $GITHUB_ENV
         version="$(cat docs/latest_tag_name.txt)"
         version="$(echo $version | tr -d '\r')"
-        cd src/linux || exit 251
+        cd ./linux/src || exit 251
         chmod u+x prebuild || exit 250
         make || exit 249
         if [[ -f "release/dynamic/rgbdiff" ]]; then
