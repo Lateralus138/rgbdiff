@@ -106,11 +106,11 @@ jobs:
           git add ./docs/json/rgbdiff_linux_md5.json || exit 245
           git commit --allow-empty -am "Pushed ./docs/json/rgbdiff_linux_md5.json to master. - $(date -u)" || exit 244
           git push --force origin master || exit 243
-          gh release upload "$version" src/linux/release/dynamic/rgbdiff || exit 242
+          gh release upload "$version" linux/release/dynamic/rgbdiff || exit 242
         else
           exit 248
         fi
-        cd src/linux || exit 241
+        cd linux || exit 241
         chmod 0755 release/dynamic/rgbdiff || exit 240
         mkdir debian/usr/bin || exit 239
         cp release/dynamic/rgbdiff debian/usr/bin || exit 238
@@ -123,4 +123,4 @@ jobs:
         git add ./docs/json/rgbdiff_debian_md5.json || exit 234
         git commit --allow-empty -am "Pushed ./docs/json/rgbdiff_debian_md5.json to master. - $(date -u)" || exit 233
         git push --force origin master || exit 232
-        gh release upload "$version" src/linux/rgbdiff-1.0.0.deb || exit 231
+        gh release upload "$version" linux/rgbdiff-1.0.0.deb || exit 231
