@@ -20,14 +20,15 @@ jobs:
         shell: pwsh
         id: windows_build_id
         run: |
-          $break_line = '-' * 80
-          $br = $break_line + "`n" + $break_line
+          if (Test-Path -Path .\scripts\functions.ps1){
+            . .\scripts\functions.ps1
+            $br = BreakLine -Width 100 -Lines 2
+          }
           $br
           try {
             .\scripts\buildwindows.ps1
           } catch {
             $_.Exception.Message
             $br
-            Exit 69
           }
           $br
