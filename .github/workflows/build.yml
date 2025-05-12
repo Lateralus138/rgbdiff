@@ -115,6 +115,8 @@ jobs:
         rm -f debian/usr/bin/.nomedia || exit 239
         cp release/dynamic/rgbdiff debian/usr/bin || exit 238
         dpkg-deb --root-owner-group --build debian rgbdiff-1.0.0.deb || exit 237
+        rm debian/usr/bin/rgbdiff
+        touch debian/usr/bin/.nomedia
         MESSAGED="{\n\t\"schemaVersion\": 1,\n\t\"color\": \"2E9778\",\n\t\"label\": \"rgbdiff-1.0.0.deb MD5\",\n\t\"message\": \"PLACEHOLDER\",\n\t\"labelColor\": \"1d1d1d\",\n\t\"style\": \"for-the-badge\",\n\t\"namedLogo\": \"debian\"\n}"
         MD5D=($(md5sum rgbdiff-1.0.0.deb))
         MESSAGED="${MESSAGED//PLACEHOLDER/${MD5D}}"
