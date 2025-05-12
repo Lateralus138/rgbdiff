@@ -101,7 +101,7 @@ jobs:
           MESSAGEL="{\n\t\"schemaVersion\": 1,\n\t\"color\": \"2E9778\",\n\t\"label\": \"rgbdiff MD5\",\n\t\"message\": \"PLACEHOLDER\",\n\t\"labelColor\": \"1d1d1d\",\n\t\"style\": \"for-the-badge\",\n\t\"namedLogo\": \"linux\"\n}"
           MD5L=($(md5sum release/dynamic/rgbdiff))
           MESSAGEL="${MESSAGEL//PLACEHOLDER/${MD5L}}"
-          cd ../../ || exit 247
+          cd ../ || exit 247
           echo -e "$MESSAGEL" > ./docs/json/rgbdiff_linux_md5.json || exit 246
           git add ./docs/json/rgbdiff_linux_md5.json || exit 245
           git commit --allow-empty -am "Pushed ./docs/json/rgbdiff_linux_md5.json to master. - $(date -u)" || exit 244
