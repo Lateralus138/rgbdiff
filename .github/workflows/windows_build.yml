@@ -7,7 +7,16 @@ on:
       - '**.sln'
       - '.github/**.yml'
       - 'scripts/**.ps1'
-
+env:
+  VS_PROGRAM: 1
+  VS_FILE: 0
+  VS_EPOCH:
+  VS_FULL:
+  RELEASE_TITLE: "RGB Diff"
+  RELEASE_FILE: "./docs/md/pre-release.md"
+  BIN_DEFAULT: "rgbdiff"
+  PRERELEASE: True
+  GH_TOKEN: ${{ github.token }}
 jobs:
   windows_build:
     runs-on: windows-latest
@@ -24,12 +33,11 @@ jobs:
             . .\scripts\functions.ps1
             $br = BreakLine -Width 100 -Lines 2
           }
-          $br
+          $br; "Building application."; $br
           try {
             .\scripts\buildwindows.ps1
           } catch {
-            $_.Exception.Message
-            $br
+            $br; $_.Exception.Message; $br
           }
-          $br
-          Get-ChildItem -Path .\build\windows
+          $br; $PWD; $br
+          
