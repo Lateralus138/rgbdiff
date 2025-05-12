@@ -39,5 +39,39 @@ jobs:
           } catch {
             $br; $_.Exception.Message; $br
           }
-          $br; $PWD; $br
+          $br; "Retrieving MD5 hash."; $br
+          $epoch = [decimal] [datetimeoffset]::UtcNow.ToUnixTimeMilliseconds()
+          "VS_FULL=${{ env.VS_PROGRAM }}.${{ env.VS_FILE }}.$epoch" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf-8 -Append
+          "${{ env.VS_PROGRAM }}.${{ env.VS_FILE }}.$epoch" | Out-File -FilePath .\docs\latest_tag_name.txt
+          $rgbdiff_x64_md5_text = @'
+          {
+            "schemaVersion": 1,
+            "color": "2E9778",
+            "label": "rgbdiff-x64.exe MD5",
+            "message": "PLACEHOLDER",
+            "labelColor": "1d1d1d",
+            "style": "for-the-badge",
+            "namedLogo": "windows"
+          }
+          '@
+          Write-Output "$rgbdiff_x64_md5_text" > .\docs\json\rgbdiff_x64_md5.json
+          $file = ".\docs\json\rgbdiff_x64_md5.json"
+          $md5 = New-Object -TypeName System.Security.Cryptography.MD5CryptoServiceProvider
+          $hash = $(Get-FileHash -Path "build\windows\rgbdiff.exe" -Algorithm MD5).Hash
+          ((Get-Content -path $file -Raw) -replace 'PLACEHOLDER',$hash) | Set-Content -Path "$file"
+          git add .\docs\json\* .\docs\latest_tag_name.txt
+          git config --global user.name 'Lateralus138'
+          git config --global user.email 'Lateralus138@users.noreply.github.com'
+          git commit --allow-empty -am "Pushed .\docs\json\* to master. - $(Get-Date ([datetime]::UtcNow)) UTC"
+          git push --force origin master
+      - name: Release Windows
+        uses: ncipollo/release-action@v1
+        with:
+          allowUpdates: True
+          tag: ${{ env.VS_FULL }}
+          name: ${{ env.RELEASE_TITLE }} - v${{ env.VS_FULL }}
+          bodyFile: ${{ env.RELEASE_FILE }}
+          prerelease: ${{ env.PRERELEASE }}
+          artifacts: build\windows\${{ env.BIN_DEFAULT }}.exe
+          token: ${{ secrets.GITHUB_TOKEN }}
           
