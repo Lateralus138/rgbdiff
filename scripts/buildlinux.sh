@@ -25,7 +25,7 @@ cd $SOURCEDIR
 echo "Attempting to build precompiled headers and objects..."
 ./prebuild
 error_=$?
-if [[ $? -gt 0 ]]; then
+if [[ $error_ -gt 0 ]]; then
   echo -e "Could not build precompiled headers and objects...\nExiting."
   exit 250
 fi
