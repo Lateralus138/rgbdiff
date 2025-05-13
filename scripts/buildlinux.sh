@@ -36,7 +36,8 @@ if [[ ! -e "./release/dynamic/rgbdiff" ]]; then
 fi
 echo "Attempting to move the program to the project build directory..."
 mv "./release/dynamic/rgbdiff" ${BUILDDIR}/
-if [[ $? -gt 0 ]]; then
+error_=$?
+if [[ $error_ -gt 0 ]]; then
   echo -e "Could not move the program to the project build directory...\nExiting."
   exit 248
 fi 
