@@ -191,3 +191,60 @@ All hashes are retrieved at compile/build time.
 ### Current Debian Installer MD5
 
 ![DEBIAN MD5](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/Lateralus138/rgbdiff/master/docs/json/rgbdiff_debian_md5.json)
+
+### Other Miscellaneous File Information
+
+|Description|Status|
+|:---:|:---:|
+|Project Release Date|![GitHub Release Date](https://img.shields.io/github/release-date/Lateralus138/rgbdiff?style=for-the-badge&labelColor=1D1D1D&color=ffff99)|
+|Total downloads for this project|![GitHub all releases](https://img.shields.io/github/downloads/Lateralus138/rgbdiff/total?style=for-the-badge&labelColor=1D1D1D&color=ffff99)|
+|Complete repository size|![This Repo Size](https://img.shields.io/github/repo-size/Lateralus138/rgbdiff?style=for-the-badge&labelColor=1D1D1D&color=ffff99)|
+|Commits in last month|![GitHub commit activity](https://img.shields.io/github/commit-activity/m/Lateralus138/rgbdiff?style=for-the-badge&labelColor=1D1D1D&color=ffff99)|
+|Commits in last year|![GitHub commit activity](https://img.shields.io/github/commit-activity/y/Lateralus138/rgbdiff?style=for-the-badge&labelColor=1D1D1D&color=ffff99)|
+
+---
+
+## Media
+
+Logo
+
+![LOGO](docs/media/logo/rgbdiff.png)
+
+Help
+
+![HELP](docs/media/screenshots/help.png)
+
+Linux Man Page
+
+![LINUX MAN PAGE](docs/media/screenshots/manpage.png)
+
+---
+
+## Support Me If You Like
+
+If you like any of the projects below and care to donate to my ***PayPal***:
+
+[![PayPal Donation](./docs/media/misc/paypal_donate_button.png)](https://paypal.me/ianapride?locale.x=en_US)
+
+
+Or ***Buy Me A Coffee*** if your prefer:
+
+[![Buy Me A Coffee](./docs/media/misc/buymeacoffe_a.png)](https://www.buymeacoffee.com/ianalanpride)
+
+---
+
+## [LICENSE](./LICENSE)
+
+![License Info](https://img.shields.io/github/license/Lateralus138/rgbdiff?style=for-the-badge&labelColor=1D1D1D&color=ffff99)
+
+<details>
+  <summary>License Excerpt</summary>
+  <br>
+  <blockquote>
+This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+  </blockquote>
+  <br>
+  <blockquote>
+ This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+  </blockquote>
+</details>
